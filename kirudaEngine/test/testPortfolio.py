@@ -3,25 +3,43 @@ Created on 2015. 6. 16.
 
 @author: Jay
 '''
-from engine.portfolio import Portfolio
 from engine.assets import Asset
+from engine.historicalData import HistoricalData
+from engine.portfolio import Portfolio
+from engine.selectAssets import SelectAsset
+from util.assetConditions import assetConditions
 
-asset1 = Asset(assetName = "APPLE", assetCode = "AAPL")
-asset2 = Asset(assetName = "GOOGLE", assetCode = "GGLE")
+#Assets
+sa = SelectAsset()
+assets = sa.selectTest()
+#print(assets)
+variables = [assetConditions.MARKET]
+conditions = ["='KQ'"]
+#variables = [assetConditions.MARKET, assetConditions.PER]
+#conditions = ["='KQ'", ">'9'"]
+assets = sa.select(variables, conditions)
+for x in assets:
+    print(x)
 
-assets = (asset1, asset2)
-periods = ("20150617" , "20150618", "20150619")
+#Periods
+periods = ["20150617", '20150618']
 
+#Weight
+weights = []
+for assetIndex in range(0, len(assets)):
+    tmpWeight = []
+    for timeIndex in range(0, len(periods)):
+        tmpWeight.append(1)    
+        
+    weights.append(tmpWeight)
+
+#Historical Prices
+hd = HistoricalData()
+prices = hd.getStockPrices(assets, periods)
+
+#Portfolio
 pfo = Portfolio(assets, periods, 0)
-
-prices = ((5,6,5),(10,10,11))
-weights = ((1,2,1),(3,3,4))
-
 pfo.setData(prices, weights)
-#===============================================================================
-# pfo.setPrices(prices)
-# pfo.setWeights(weights)
-#===============================================================================
 
 for index in range(0, len(periods)):    
     pfoValue = pfo.getPfoValue(index)

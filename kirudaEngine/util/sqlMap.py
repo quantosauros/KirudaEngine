@@ -7,7 +7,7 @@ Created on 2015. 5. 14.
 
 class sqlMap:
     
-    connectInfo = ("61.96.111.174", "niks12", "12345", "kiruda")
+    connectInfo = ("61.96.111.175", "niks12", "1qaz2wsx", "kiruda")
     
     selectStockInfo = " \
         SELECT \
@@ -171,5 +171,14 @@ class sqlMap:
             * \
         FROM \
             TRADER_INFO"
-        
-        
+    
+    SELECTHISTORICALSTOCKPRICES = "\
+        SELECT \
+            date, currentPrice \
+        FROM \
+            STOCK_SISAE \
+        WHERE \
+            CODE = '%s' \
+            AND (%s) "
+            
+            

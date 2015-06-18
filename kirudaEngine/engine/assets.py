@@ -16,4 +16,7 @@ class Asset():
     def getAssetCode(self):
         return self.assetCode
     
-    
+    def __str__(self):
+        return "AssetCode: " + str(self.assetCode) + "; AssetName: " + str(self.assetName) 
+        
+        
