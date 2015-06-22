@@ -10,8 +10,8 @@ import csv
 trainingMtx = []
 rstMtx = []
 rstTmp = []
-f = open('trainingData.csv','r')
-g = open('resultData.csv','r')
+f = open('D:\trainingData.csv','r')
+g = open('D:\resultData.csv','r')
 trainingData = csv.reader(f)
 resultData = csv.reader(g)
 i=0
@@ -20,9 +20,7 @@ for row in trainingData:
 #     tmpArray = row.split(',')
     tmpArray = map(float, row)
     trainingMtx.append(tmpArray)
-    i = i + 1
-    print(i)
-    print(row)
+
     
 #     print(row)
 
@@ -50,8 +48,8 @@ m=svm_train(prob, param)
 TestMtx = []
 rstTestMtx = []
 rstTestTmp = []
-f = open('trainingData_test.csv','r')
-g = open('resultData_test.csv','r')
+f = open('D:\trainingData_test.csv','r')
+g = open('D:\resultData_test.csv','r')
 trainingTestData = csv.reader(f)
 resultTestData = csv.reader(g)
  
@@ -72,7 +70,7 @@ g.close()
  
 dd = svm_predict(rstTestTmp, TestMtx, m)
  
-print(dd)
+print(dd[0])
 
 
 
