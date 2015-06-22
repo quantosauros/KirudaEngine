@@ -10,8 +10,8 @@ import csv
 trainingMtx = []
 rstMtx = []
 rstTmp = []
-f = open('D:\trainingData.csv','r')
-g = open('D:\resultData.csv','r')
+f = open('D:\\trainingData.csv','r')
+g = open('D:\\resultData.csv','r')
 trainingData = csv.reader(f)
 resultData = csv.reader(g)
 i=0
@@ -48,8 +48,8 @@ m=svm_train(prob, param)
 TestMtx = []
 rstTestMtx = []
 rstTestTmp = []
-f = open('D:\trainingData_test.csv','r')
-g = open('D:\resultData_test.csv','r')
+f = open("D:\\trainingData_test.csv","rb")
+g = open("D:\\resultData_test.csv","rb")
 trainingTestData = csv.reader(f)
 resultTestData = csv.reader(g)
  
