@@ -181,4 +181,11 @@ class sqlMap:
             CODE = '%s' \
             AND (%s) "
             
-            
+    SELECTHISTORICALSTOCKSISAE = "\
+        SELECT \
+            * \
+        FROM \
+            STOCK_SISAE \
+        WHERE \
+            CODE = '%s' \
+            AND (%s) "

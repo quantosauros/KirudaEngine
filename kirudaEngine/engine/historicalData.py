@@ -45,4 +45,28 @@ class HistoricalData():
             
         return stockPrices
         
+    def getStockSisaeData(self, assetLists, periods):
         
+        sisaeTable = []
+        for assetIndex in range(0, len(assetLists)):
+            assetCode = assetLists[assetIndex].getAssetCode()
+            tmpList = []
+            timeStatement = ""
+            for timeIndex in range(0, len(periods)):
+                date = periods[timeIndex]   
+                tmp = " DATE = '" + date + "' OR"                 
+                timeStatement = timeStatement + tmp
+#             conditionStatement = "marketCap >= " + condition
+            
+            totalStatement = sqlMap.SELECTHISTORICALSTOCKSISAE %(assetCode, timeStatement[:-2])
+            sisae = self.dbInstance.select(totalStatement)
+            
+            for timeIndex in range(0, len(periods)):
+                if periods[timeIndex] == sisae[timeIndex][1]:
+                    tmpList.append(sisae[timeIndex][2:10])
+                else :
+                    tmpList.append(0)
+            
+            sisaeTable.append(tmpList)
+        return sisaeTable
+    
