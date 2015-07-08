@@ -10,6 +10,7 @@ class assetConditions():
     #KS, KQ
     MARKET = 'MARKET'
     MARKETCAP = 'MARKETCAP'
+    CODE = 'CODE'
     
     tableMap = {
         "STOCK_INFO" : "B",
@@ -20,6 +21,7 @@ class assetConditions():
         MARKET : "STOCK_INFO",
         PER : "STOCK_SISAE",
         MARKETCAP : "STOCK_SISAE",
+        CODE : "STOCK_SISAE",
          
     }
     

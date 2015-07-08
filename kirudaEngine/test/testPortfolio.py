@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 '''
 Created on 2015. 6. 16.
 
@@ -11,18 +12,16 @@ from util.assetConditions import assetConditions
 
 #Assets
 sa = SelectAsset()
-assets = sa.selectTest()
-#print(assets)
 variables = [assetConditions.MARKET]
 conditions = ["='KQ'"]
+#variables = [assetConditions.CODE]
+#conditions = [" in ('KS005930', 'KS008770')"]
 #variables = [assetConditions.MARKET, assetConditions.PER]
 #conditions = ["='KQ'", ">'9'"]
 assets = sa.select(variables, conditions)
-for x in assets:
-    print(x)
 
 #Periods
-periods = ["20150617", '20150618']
+periods = ['20150616','20150617', '20150618']
 
 #Weight
 weights = []

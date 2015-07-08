@@ -189,3 +189,7 @@ class sqlMap:
         WHERE \
             CODE = '%s' \
             AND (%s) "
+            
+    SELECTHISTORICALSTOCKPRICES2 = "\
+        CALL PC_SLT_HISTSTOCKPRICE %s"
+        

@@ -28,6 +28,8 @@ class Portfolio():
                 
                 price = self.prices[assetIndex][timeIndex]
                 
+                #print (self.periods[timeIndex], self.assets[assetIndex].getAssetCode(), price)
+                
                 pfoSum = pfoSum + currWeight * price
                 balanceSum = balanceSum - (currWeight - prevWeight) * price           
                         
