@@ -6,7 +6,7 @@ Created on 2015. 7. 1.
 
 from numpy import *
 from fileinput import filename
-
+import scipy.stats as ss
 
 def pca(dataMat, topNfeat = 9999999):
     meanVals = mean(dataMat, axis = 0)
@@ -18,42 +18,61 @@ def pca(dataMat, topNfeat = 9999999):
     redEigVects = eigVects[:,eigValInd]
     lowDDataMat = meanRemoved * redEigVects
     reconMat = (lowDDataMat * redEigVects.T) + meanVals
+     
     return lowDDataMat, reconMat
 
-
-# http://quant.stackexchange.com/questions/7868/how-to-use-pca-for-trading
-# def getStockSisaeData(self, assetLists, periods):
-#         
-#         sisaeTable = []
-#         for assetIndex in range(0, len(assetLists)):
-#             assetCode = assetLists[assetIndex].getAssetCode()
-#             tmpList = []
-#             timeStatement = ""
-#             for timeIndex in range(0, len(periods)):
-#                 date = periods[timeIndex]   
-#                 tmp = " DATE = '" + date + "' OR"                 
-#                 timeStatement = timeStatement + tmp
-# #             conditionStatement = "marketCap >= " + condition
-#             
-#             totalStatement = sqlMap.SELECTHISTORICALSTOCKSISAE %(assetCode, timeStatement[:-2])
-#             sisae = self.dbInstance.select(totalStatement)
-#             
-#             for timeIndex in range(0, len(periods)):
-#                 if periods[timeIndex] == sisae[timeIndex][1]:
-#                     tmpList.append(sisae[timeIndex][2:10])
-#                 else :
-#                     tmpList.append(0)
-#             
-#             sisaeTable.append(tmpList)
-#         return sisaeTable
-
-
-
-# SELECTHISTORICALSTOCKSISAE = "\
-#         SELECT \
-#             * \
-#         FROM \
-#             STOCK_SISAE \
-#         WHERE \
-#             CODE = '%s' \
-#             AND (%s) "
+def getPCAColumnNum(dataMat, topNfest = 9999999):
+    tmp = []
+    meanMtx = []
+    transformedMtx = []
+    arrayNum = len(list(dataMat[0][0]))
+    for tmpIndex in range(0, len(dataMat)):
+    #     for tmpII in range(0,dataMat[tmpIndex].len()):
+        meanMtx.append([0 for _ in range(arrayNum)])
+        tmp.append([])
+        for timeIndex in range(0,len(dataMat[tmpIndex])):
+            tmp[tmpIndex].append(list(dataMat[tmpIndex][timeIndex]))
+            for arrayIndex in range(0, arrayNum):
+                meanMtx[tmpIndex][arrayIndex] += tmp[tmpIndex][timeIndex][arrayIndex]
+        
+    
+    for tmpIndex in range(0, len(dataMat)):
+        for arrayIndex in range(0, arrayNum):
+            meanMtx[tmpIndex][arrayIndex] = meanMtx[tmpIndex][arrayIndex] / len(dataMat[tmpIndex])
+        
+        for timeIndex in range(0, len(dataMat[tmpIndex])):
+            for arrayIndex in range(0, arrayNum):
+                tmp[tmpIndex][timeIndex][arrayIndex] = tmp[tmpIndex][timeIndex][arrayIndex] - meanMtx[tmpIndex][arrayIndex]
+    # time inde
+    
+    
+    for timeIndex in range(0, len(dataMat[0])):
+        transformedMtx.append([])
+        
+        for arrayIndex in range(0, arrayNum):
+            transformedMtx[timeIndex].append([])
+            
+            for stockIndex in range(0, len(dataMat)):
+                transformedMtx[timeIndex][arrayIndex].append([])
+                transformedMtx[timeIndex][arrayIndex][stockIndex] = tmp[stockIndex][timeIndex][arrayIndex]
+    
+    CovMat = zeros((arrayNum, arrayNum), float)
+    
+    for time in range(0, len(transformedMtx)):
+        for i in range(0, arrayNum):
+            for j in range(0, arrayNum):
+                tempSum = 0
+                for stockIndex in range(0, len(dataMat)):
+                    tempSum += transformedMtx[time][i][stockIndex] * transformedMtx[time][j][stockIndex]
+                CovMat[i][j] += tempSum
+    
+                
+    CovMat = [x / len(transformedMtx) for x in CovMat]
+    eigVals, eigVects = linalg.eig(mat(CovMat))
+    tteemmpp = ss.rankdata(eigVals)
+    tteemmppColumnNum = []
+    for index in range(0, len(eigVals)):
+        if tteemmpp[index] > (len(eigVals) - topNfest) :
+            tteemmppColumnNum.append(index)
+            
+    return tteemmppColumnNum
