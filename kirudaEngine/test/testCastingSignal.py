@@ -42,7 +42,8 @@ prob = svm_problem(rstTmp, trainingMtx)
 param = svm_parameter()
 param.kernel_type = LINEAR
 param.C = 10
-
+param.parse_options('-b 1')
+print("START!!!")
 m=svm_train(prob, param)
 
 TestMtx = []
@@ -68,9 +69,10 @@ rstTestTmp = map(int, rstTestTmp)
 f.close()
 g.close()
  
-dd = svm_predict(rstTestTmp, TestMtx, m)
+dd = svm_predict(rstTestTmp, TestMtx, m, '-b 1')
  
 print(dd[0])
+print(dd[2])
 
 
 
