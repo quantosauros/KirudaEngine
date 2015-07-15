@@ -101,7 +101,7 @@ class sqlMap:
             
     insertStockSisaeData =  " \
         INSERT INTO \
-            stock_sisae ( %s ) \
+            STOCK_SISAE ( %s ) \
         VALUES \
             ( %s ) \
         ON DUPLICATE KEY UPDATE \
@@ -192,4 +192,7 @@ class sqlMap:
             
     SELECTHISTORICALSTOCKPRICES2 = "\
         CALL PC_SLT_HISTSTOCKPRICE %s"
+        
+    SELECTHISTSTOCKSISAE = "\
+        CALL PC_SLT_HISTSTOCKSISAE %s"
         
