@@ -99,8 +99,10 @@ class HistoricalData():
                 resultDate = prices[index + periodIndex][1]
                 resultPrice = prices[index + periodIndex][2:]                            
                 #print(resultCode, resultDate, resultPrice)
-                
-                priceList.append(resultPrice)
+                resultSisae = []
+                for tmpX in resultPrice:
+                    resultSisae.append(tmpX)
+                priceList.append(resultSisae)
                 
             stockPrices.append(priceList)
             
