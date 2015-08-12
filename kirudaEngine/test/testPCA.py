@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 '''
 Created on 2015. 7. 1.
 
@@ -8,7 +9,7 @@ from engine.historicalData import HistoricalData
 from engine.selectAssets import SelectAsset
 from util.assetConditions import assetConditions
 from engine.portfolio import Portfolio
-from engine.principalComponentAnalysis import pca, getPCAColumnNum
+from engine.machineLearning.principalComponentAnalysis import pca, getPCAColumnNum
 from numpy import zeros
 
 #Assets
@@ -16,17 +17,20 @@ sa = SelectAsset()
 assets = sa.selectTest()
 #print(assets)
 variables = [assetConditions.MARKET]
-# conditions = ["='KS'"]
-variables = [assetConditions.MARKET, assetConditions.MARKETCAP]
-conditions = ["='KS'", ">'5000'"]
+conditions = ["='KS'"]
+#variables = [assetConditions.MARKET, assetConditions.MARKETCAP]
+#conditions = ["='KS'", ">'5000'"]
 assets = sa.select(variables, conditions)
-for x in assets:
-    print(x)
-periods = ["20150617", '20150618']
+#for x in assets:
+#    print(x)
+periods = ['20150610', '20150611', '20150612', '20150615', '20150616', '20150617', '20150618']
+#periods = ['20150617', '20150618']
 hd = HistoricalData()
-sisae = hd.getStockSisaeData(assets, periods)
+sisae = hd.getStockSisaeData1(assets, periods)
 
-dd = getPCAColumnNum(sisae, topNfest = 4)
+#print(sisae)
+
+dd = getPCAColumnNum(sisae, topNfest = 10)
 print(dd)
 # 
 # tmp = []
@@ -78,4 +82,5 @@ print(dd)
 #         
 # dd = pca(transformedMtx, 4)
 # pfo = Portfolio(assets, [1,],0)
+
 

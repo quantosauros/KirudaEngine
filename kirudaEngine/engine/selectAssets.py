@@ -14,8 +14,10 @@ class SelectAsset():
         self.dbInstance = dbConnector(sqlMap.connectInfo)
         self.AssetList = []
         
-    def select(self, variables, conditions):    
-        date = '20150617'   
+    def select(self, variables, conditions, date):
+        '''
+        
+        '''   
          
         selectStatement = "\
             SELECT \
@@ -43,7 +45,7 @@ class SelectAsset():
             #print(condition)
             totalStatement = totalStatement + condition
         
-        #print(totalStatement)
+        print(totalStatement)
         
         assetList = self.dbInstance.select(totalStatement)
         
@@ -58,6 +60,9 @@ class SelectAsset():
         
         
     def selectTest(self):
+        '''
+        test method
+        '''
         assetNames  = ("SAMSUNG ELCT", "HOTEL SILLA")
         assetCodes = ("KS005930", "KS008770")
         

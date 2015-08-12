@@ -42,7 +42,7 @@ prob = svm_problem(rstTmp, trainingMtx)
 param = svm_parameter()
 param.kernel_type = LINEAR
 param.C = 10
-param.parse_options('-b 1')
+
 print("START!!!")
 m=svm_train(prob, param)
 
@@ -58,20 +58,22 @@ for row in trainingTestData:
 #     tmpArray = row.split(',')
     tmpArray = map(float, row)
     TestMtx.append(tmpArray)
+    #print tmpArray
 #     print(row)
  
 for col in resultTestData:
     rstTestMtx.append(col)
     rstTestTmp.append(col[2])
-#     print(col)
+    #print(col)
 
 rstTestTmp = map(int, rstTestTmp)
 f.close()
 g.close()
  
-dd = svm_predict(rstTestTmp, TestMtx, m, '-b 1')
+dd = svm_predict(rstTestTmp, TestMtx, m)
  
 print(dd[0])
+print(dd[1])
 print(dd[2])
 
 

@@ -20,15 +20,22 @@ for row in trainingData:
 
 #X, y = noisy_circles
 X = trainingMtx
+print(X)
+#print type(X)
 strR = ""
 for xxx in X:
+    #print xxx
+    #print type(xxx)
     tmpSTRING = ""
     for i in range(0, len(xxx)):
         tmpSTRING = tmpSTRING + repr(xxx[i]) + "; " 
         
     strR = strR + "[" + tmpSTRING + "], "
-print strR
+#print strR
 #print (y)
+print(len(X))
+print(len(X[0]))
+
 X = StandardScaler().fit_transform(X)
 strR = ""
 for xxx in X:
