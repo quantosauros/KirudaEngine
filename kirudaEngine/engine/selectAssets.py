@@ -45,7 +45,7 @@ class SelectAsset():
             #print(condition)
             totalStatement = totalStatement + condition
         
-        print(totalStatement)
+        #print(totalStatement)
         
         assetList = self.dbInstance.select(totalStatement)
         

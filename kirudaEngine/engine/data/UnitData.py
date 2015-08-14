@@ -15,5 +15,5 @@ class UnitData():
         tableName = dataEnums.tableMap[self.DataEnum]
         date = self.Date
         query = "SELECT " + self.DataEnum + " FROM " + tableName + " WHERE DATE = " + "'" + date + "'"
-        print query
+        #print query
         
