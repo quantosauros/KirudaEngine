@@ -10,10 +10,18 @@ from util.dataEnums import dataEnums
 from engine.data.AbstractData import AbstractData
 from util.QueryMaker import QueryMaker
 from util.Date import Date
+from util.SouthKoreaCalendar import SouthKoreaCalendar
+from util.BusinessDayConvention import BusinessDayConvention
 
 
-date1 = Date('19850201')
+
+
+date1 = Date('20150815')
 date2 = Date.valueOf('19860111')
+
+calen = SouthKoreaCalendar.getCalendar(0)
+print calen.isHoliday(date1)
+print calen.adjustDate(date1, BusinessDayConvention.MODIFIED_FOLLOWING)
 
 periods = [Date('20150611'), Date('20150612'), Date('20150617'),]
 #Assets
@@ -39,6 +47,9 @@ for x in result :
     for y in x :
         print y
         print len(y)
+
+print result[0][0][1]
+print result[0][0][1][1]
 
 #===============================================================================
 # #Assets
