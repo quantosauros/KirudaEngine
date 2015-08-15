@@ -9,8 +9,13 @@ from util.assetConditions import assetConditions
 from util.dataEnums import dataEnums
 from engine.data.AbstractData import AbstractData
 from util.QueryMaker import QueryMaker
+from util.Date import Date
 
-periods = ['20150611','20150612','20150615','20150616','20150617', '20150618']
+
+date1 = Date('19850201')
+date2 = Date.valueOf('19860111')
+
+periods = [Date('20150611'), Date('20150612'), Date('20150617'),]
 #Assets
 sa = SelectAsset()
 variables = [assetConditions.MARKET]
@@ -19,16 +24,21 @@ conditions = ["='KQ'"]
 #conditions = [" in ('KS005930', 'KS008770')"]
 #variables = [assetConditions.MARKET, assetConditions.PER]
 #conditions = ["='KQ'", ">'9'"]
-assets = sa.select(variables, conditions, '20150617')
-
+assets = sa.select(variables, conditions, Date('20150617'))
+#assets = sa.selectTest()
 
 dats = [dataEnums.DataEnum.ClosePrice, dataEnums.DataEnum.TradingVolume]
 dataTypes = [dataEnums.TypeEnum.Value, dataEnums.TypeEnum.ChangeAmount]
 dataCondiTypes = [dataEnums.ConditionEnum.NONE, dataEnums.ConditionEnum.LAG]
-dataConditions = ["", "-1"]
+dataConditions = [0, -1]
 
 dataClass = AbstractData(assets, dats, dataTypes, dataCondiTypes, dataConditions)
-dataClass.getResult(periods[1])
+result = dataClass.getResult(periods)
+
+for x in result :
+    for y in x :
+        print y
+        print len(y)
 
 #===============================================================================
 # #Assets

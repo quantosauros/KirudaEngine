@@ -34,7 +34,7 @@ class SelectAsset():
              WHERE \
                 A.CODE = B.CODE \
                 AND A.DATE = '%s'\
-            " %(date)
+            " %(date.getDate())
             
         totalStatement = selectStatement + fromStatement[:-2] + whereStatement
         for index in range(0, len(variables)):
@@ -63,12 +63,12 @@ class SelectAsset():
         '''
         test method
         '''
-        assetNames  = ("SAMSUNG ELCT", "HOTEL SILLA")
-        assetCodes = ("KS005930", "KS008770")
+        assetNames  = ("SAMSUNG ELCT", "HOTEL SILLA", "CJE&M")
+        assetCodes = ("KS005930", "KS008770", "KQ130960")
         
-        length = 2
+        length = len(assetCodes)
         
-        for index in range(0, 2):
+        for index in range(0, length):
             self.AssetList.append(Asset(assetNames[index], assetCodes[index]))
         
         return self.AssetList

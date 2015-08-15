@@ -14,6 +14,6 @@ class UnitData():
     def getResult(self):
         tableName = dataEnums.tableMap[self.DataEnum]
         date = self.Date
-        query = "SELECT " + self.DataEnum + " FROM " + tableName + " WHERE DATE = " + "'" + date + "'"
-        #print query
+        query = "CALL PC_TEST1('" + self.DataEnum + "', '" + tableName + "'," + date.getDate() + date.plusDays(1).getDate() + "  , "'KS005930','KS008770'");"
+        print query
         
