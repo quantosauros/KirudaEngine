@@ -14,7 +14,7 @@ from util.Vertex import Vertex
 
 asOfDate = Date("20150622")
 calendar = SouthKoreaCalendar(0)
-pp = Period(asOfDate, Vertex.valueOf("M3"), calendar)
+pp = Period(asOfDate, Vertex.valueOf("D1"), calendar)
 periods = pp.getPeriod()
 for x in periods :
     print x
@@ -35,17 +35,25 @@ assets = sa.select(variables, conditions, asOfDate)
 dats = [dataEnums.DataEnum.ClosePrice, dataEnums.DataEnum.TradingVolume]
 dataTypes = [dataEnums.TypeEnum.Value, dataEnums.TypeEnum.ChangeAmount]
 dataCondiTypes = [dataEnums.ConditionEnum.NONE, dataEnums.ConditionEnum.LAG]
-dataConditions = [0, -1]
+dataConditions = [-3, -1]
 
 dataClass = AbstractData(assets, dats, dataTypes, dataCondiTypes, dataConditions)
-result = dataClass.getResult(periods)
+result = dataClass.getResult(calendar, periods)
 
 for x in result :
     for y in x :
         print y
         print len(y)
-
-print result[0][0][1]
+        
+#[date][data][stockCode][column]
+print result[0][0]
+print result[1][0]
+print result[0][1]
+print result[0][0][0][1]
 print result[0][0][1][1]
+#print result[0][0][0]
+#print result[0][0][1]
+#print result[0][0][1][1]
+#print result[0][0][1][2]
 
 

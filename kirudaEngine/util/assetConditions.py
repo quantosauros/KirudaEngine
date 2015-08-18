@@ -13,15 +13,15 @@ class assetConditions():
     CODE = 'CODE'
     
     tableMap = {
-        "STOCK_INFO" : "B",
-        "STOCK_SISAE" : "A",    
+        "stock_info" : "B",
+        "stock_sisae" : "A",    
     }
     
     conditionTable = {
-        MARKET : "STOCK_INFO",
-        PER : "STOCK_SISAE",
-        MARKETCAP : "STOCK_SISAE",
-        CODE : "STOCK_SISAE",
+        MARKET : "stock_info",
+        PER : "stock_sisae",
+        MARKETCAP : "stock_sisae",
+        CODE : "stock_sisae",
          
     }
     

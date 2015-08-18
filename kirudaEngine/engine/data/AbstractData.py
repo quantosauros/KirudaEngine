@@ -7,6 +7,7 @@ from util.dataEnums import dataEnums
 from util.QueryMaker import QueryMaker
 from util.dbConnector import dbConnector
 from util.sqlMap import sqlMap
+from util.BusinessDayConvention import BusinessDayConvention
 
 class AbstractData():
         
@@ -19,8 +20,11 @@ class AbstractData():
         self.numOfData = len(data)
         self.DB = dbConnector(sqlMap.connectInfo);
         
-    def getResult(self, periods):
+    def getResult(self, calendar, periods):
+        '''
+        Result : [date][data][stockCode][column]
         
+        '''
         results = []
         for periodIndex in range(0, len(periods)):
             tmpResult = []
@@ -36,11 +40,19 @@ class AbstractData():
                 #columnName = data
                 #tableNames = tableNames + tableName
                 #columnNames = columnNames + columnName
+                currDate = date.getDate()
+                tmpLagDate = date
+                for index in range(0, abs(condition)):                    
+                    tmpLagDate = calendar.adjustDate(tmpLagDate.plusDays(-1),
+                                                     BusinessDayConvention.PRECEDING)
+                lagDate = tmpLagDate.getDate()
                 
+                print currDate, lagDate
+                                
                 code = QueryMaker.stockCodeQueryMaker(self.Assets, '0')
                 
-                query = 'CALL PC_TEST3("' + data + '", "' + tableName + '",' + \
-                    '"' + date.getDate() + '","' + date.plusDays(condition).getDate() + \
+                query = 'CALL PC_GETDATA("' + data + '", "' + tableName + '",' + \
+                    '"' + currDate + '","' + lagDate + \
                     '", "' + code +'");'
                 #print query
                         
