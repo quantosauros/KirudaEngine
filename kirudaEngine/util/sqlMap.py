@@ -7,7 +7,8 @@ Created on 2015. 5. 14.
 
 class sqlMap:
     
-    connectInfo = ("61.96.111.175", "niks12", "1qaz2wsx", "kiruda")
+    connectInfo = ("kirudadb.c5rq93advanj.us-west-2.rds.amazonaws.com", "admin",
+                    "1qaz2wsx", "kirudaDB")
     
     selectStockInfo = " \
         SELECT \

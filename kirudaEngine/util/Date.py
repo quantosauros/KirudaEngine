@@ -194,3 +194,9 @@ class Date():
     def getEom(self):
         return self.m_isEom
     
+    def isEqual(self, date):
+        if self.m_canonicalForm == date.m_canonicalForm :
+            return True
+        else :
+            return False
+    

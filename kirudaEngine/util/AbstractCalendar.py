@@ -65,13 +65,13 @@ class AbstractCalendar(Calendar):
     
     def adjustDate(self, date, convention):
         d1 = date
-        if convention is BusinessDayConvention.FOLLOWING or BusinessDayConvention.MODIFIED_FOLLOWING : 
+        if convention is BusinessDayConvention.FOLLOWING or convention is BusinessDayConvention.MODIFIED_FOLLOWING : 
             while self.isHoliday(d1) :
                 d1 = d1.plusDays(1)
             if convention is BusinessDayConvention.MODIFIED_FOLLOWING : 
                 if d1.getMonth() != date.getMonth() :
                     return self.adjustDate(date, BusinessDayConvention.PRECEDING)
-        elif convention is BusinessDayConvention.PRECEDING or BusinessDayConvention.MODIFIED_PRECEDING :
+        elif convention is BusinessDayConvention.PRECEDING or convention is BusinessDayConvention.MODIFIED_PRECEDING :
             while self.isHoliday(d1) :
                 d1 = d1.plusDays(-1)
             if convention is BusinessDayConvention.MODIFIED_PRECEDING : 
@@ -86,7 +86,7 @@ class AbstractCalendar(Calendar):
                 return d3
         
         return d1
-    
+        
 class DelegateCalendar(AbstractCalendar):
     
     def __init__(self):
@@ -109,5 +109,4 @@ class DelegateCalendar(AbstractCalendar):
     
     def adjustDate(self, date, convention):
         return self.delegate.adjustDate(date, convention)
-    
     

@@ -8,9 +8,19 @@ from util.assetConditions import assetConditions
 from util.dataEnums import dataEnums
 from engine.data.AbstractData import AbstractData
 from util.Date import Date
+from util.Period import Period
+from util.SouthKoreaCalendar import SouthKoreaCalendar
+from util.Vertex import Vertex
+
+asOfDate = Date("20150622")
+calendar = SouthKoreaCalendar(0)
+pp = Period(asOfDate, Vertex.valueOf("M3"), calendar)
+periods = pp.getPeriod()
+for x in periods :
+    print x
 
 
-periods = [Date('20150611'), Date('20150612'), Date('20150617'),]
+#periods = [Date('20150611'), Date('20150612'), Date('20150617'),]
 #Assets
 sa = SelectAsset()
 variables = [assetConditions.MARKET]
@@ -19,7 +29,7 @@ conditions = ["='KQ'"]
 #conditions = [" in ('KS005930', 'KS008770')"]
 #variables = [assetConditions.MARKET, assetConditions.PER]
 #conditions = ["='KQ'", ">'9'"]
-assets = sa.select(variables, conditions, Date('20150617'))
+assets = sa.select(variables, conditions, asOfDate)
 #assets = sa.selectTest()
 
 dats = [dataEnums.DataEnum.ClosePrice, dataEnums.DataEnum.TradingVolume]
