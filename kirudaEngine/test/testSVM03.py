@@ -14,147 +14,75 @@ from util.assetConditions import assetConditions
 from util.dataEnums import dataEnums
 from engine.data.AbstractData import AbstractData
 from sklearn.preprocessing.data import StandardScaler, Normalizer
+from engine.TrainingData import TrainingData
 
-#PERIOD
-asOfDate = Date("20150601")
-calendar = SouthKoreaCalendar(0)
-pp = Period(asOfDate, calendar)
-vtx = Vertex.valueOf("M3")
-periods = pp.getPeriodByVertex(vtx)
-#for x in periods :
-#    print x
+
+calendar = SouthKoreaCalendar(1)
 
 #ASSETS
 sa = SelectAsset()
 variables = [assetConditions.MARKET, assetConditions.DESIGNATED, assetConditions.MARKETCAP]
 conditions = ["='KS'", "='N'", ">=1000000"]
-assets = sa.select(variables, conditions, asOfDate)
+assets = sa.select(variables, conditions, Date("20150601"))
 #assets = sa.selectTest()
 print len(assets)
 
-#########################TRAINING SET X ###################################
 #DATA
-dats = [
+datasForX = [
     dataEnums.DataEnum.ClosePrice, 
     dataEnums.DataEnum.TradingVolume,
     dataEnums.DataEnum.MarketCap,
     dataEnums.DataEnum.ForeignHoldingStock,
 ]
-dataTypes = [
+dataTypesForX = [
     dataEnums.TypeEnum.RateOfChange, 
     dataEnums.TypeEnum.RateOfChange,
     dataEnums.TypeEnum.Value,
     dataEnums.TypeEnum.Value,
 ]
-dataCondiTypes = [
+dataCondiTypesForX = [
     dataEnums.ConditionEnum.NONE, 
     dataEnums.ConditionEnum.LAG,
     dataEnums.ConditionEnum.NONE,
     dataEnums.ConditionEnum.NONE,
 ]
-dataConditions = [
+dataConditionsForX = [
     -1, 
     -1,
     0,
     0,
 ]
 
-dataClass = AbstractData(assets, dats, dataTypes, dataCondiTypes, dataConditions)
-result = dataClass.getResult(calendar, periods)
+#########################TRAINING SET###################################
 
-X = []
-for stockIndex in range(0, len(result)) :
-    tmpX = []
-    for dateIndex in range(0, len(result[0])) :
-        tmpX.append(result[stockIndex][dateIndex])
-    X.append(tmpX)
-
-#######################Training SET Y#################
 #PERIOD
-asOfDate = asOfDate.plusDays(7)
-calendar = SouthKoreaCalendar(0)
-pp = Period(asOfDate, calendar)
-periods1 = pp.getPeriodByNumber(len(periods))
+asOfDate = Date("20150601")
+vtx = Vertex.valueOf("M6")
+lagTime = 7
 
-#for x in periods1 :
-#    print x
+tData = TrainingData(assets, datasForX, dataTypesForX, dataCondiTypesForX, dataConditionsForX)
+X = tData.getTrainingXData(asOfDate, calendar, vtx)
+print len(X[0])
+y = tData.getTrainingYData(asOfDate, calendar, lagTime, len(X[0]))
 
-dats1 = [dataEnums.DataEnum.ClosePrice,]
-dataTypes1 = [dataEnums.TypeEnum.RateOfChange,]
-dataCondiTypes1 = [dataEnums.ConditionEnum.NONE,]
-dataConditions1 = [-7,]
-
-dataClass1 = AbstractData(assets, dats1, dataTypes1, dataCondiTypes1, dataConditions1)
-result1 = dataClass1.getResult(calendar, periods1)
-
-y = []
-for stockIndex in range(0, len(result1)) :
-    tmpY = []
-    #print len(periods1), len(result1[stockIndex])
-    for dateIndex in range(0, len(periods1)) :
-    #for dateIndex in range(0, len(result1[0])) :
-        #print assets[stockIndex].getAssetName(), stockIndex, dateIndex 
-        
-        tmpValue = result1[stockIndex][dateIndex][0]
-        value = 0 if tmpValue < 0 else 1
-        #print tmpValue , value
-        tmpY.append(value)
-    y.append(tmpY)
-
-################################Test Set X##################################
+################################Test Set##################################
 #PERIOD
 asOfDate = Date("20150617")
-calendar = SouthKoreaCalendar(0)
-pp = Period(asOfDate, calendar)
-periods2 = pp.getPeriodByVertex(Vertex.valueOf("M1"))
-#for x in periods2 :
-#    print x
-    
+vtxOfTestSet = Vertex.valueOf("D1")
+lagTime= 7
 #DATA
-dataClass = AbstractData(assets, dats, dataTypes, dataCondiTypes, dataConditions)
-result2 = dataClass.getResult(calendar, periods2)
+tDataOfTestSET = TrainingData(assets, datasForX, dataTypesForX, dataCondiTypesForX, dataConditionsForX)
 
-testX = []
-for stockIndex in range(0, len(result2)) :
-    tmpX = []
-    for dateIndex in range(0, len(result2[0])) :
-        tmpX.append(result2[stockIndex][dateIndex])
-    testX.append(tmpX)
-################################TEST SET Y #####################################
-#PERIOD
-asOfDate = asOfDate.plusDays(7)
-calendar = SouthKoreaCalendar(0)
-pp = Period(asOfDate, calendar)
-periods3 = pp.getPeriodByNumber(len(periods2))
-
-#for x in periods1 :
-#    print x
-
-dats1 = [dataEnums.DataEnum.ClosePrice,]
-dataTypes1 = [dataEnums.TypeEnum.RateOfChange,]
-dataCondiTypes1 = [dataEnums.ConditionEnum.NONE,]
-dataConditions1 = [-7,]
-
-dataClass1 = AbstractData(assets, dats1, dataTypes1, dataCondiTypes1, dataConditions1)
-result3 = dataClass1.getResult(calendar, periods3)
-
-testY = []
-for stockIndex in range(0, len(result3)) :
-    tmpY = []
-    for dateIndex in range(0, len(periods3)) :
-    #for dateIndex in range(0, len(result1[0])) :
-        tmpValue = result3[stockIndex][dateIndex][0]
-        value = 0 if tmpValue < 0 else 1
-        #print tmpValue , value
-        tmpY.append(value)
-    testY.append(tmpY)
+testX = tDataOfTestSET.getTrainingXData(asOfDate, calendar, vtxOfTestSet)
+testY = tDataOfTestSET.getTrainingYData(asOfDate, calendar, lagTime, len(testX[0]))
 
 ######################################ML #####################################
 for index in range(0, len(assets)) :
     
-    #print assets[index].getAssetName(),assets[index].getAssetCode()
+    print assets[index].getAssetName(),assets[index].getAssetCode()
     #print testY[index]
-    scaledX = Normalizer().fit_transform(X[index])
+    print X[index]
+    scaledX = StandardScaler().fit_transform(X[index])
     C = 10.0  # SVM regularization parameter
     svc = svm.SVC(kernel='linear', C=C).fit(scaledX, y[index])
     rbf_svc = svm.SVC(kernel='rbf', gamma=0.7, C=C).fit(scaledX, y[index])

@@ -82,7 +82,7 @@ class SouthKoreaKRXCalendar(SouthKoreaSettlementCalendar):
         d = date.getDay()
         w = self.getDayOfWeek(date)
         
-        if super.isHoliday(date) \
+        if super(SouthKoreaKRXCalendar, self).isHoliday(date) \
             or ((m == 5) and (d == 1))\
             or ((m == 12) and (d == 31))\
             or ((m == 12) and (d == 30) and (w == 6))\

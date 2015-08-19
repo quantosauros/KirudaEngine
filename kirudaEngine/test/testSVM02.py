@@ -17,7 +17,7 @@ from sklearn.preprocessing.data import StandardScaler, Normalizer
 
 #PERIOD
 asOfDate = Date("20150601")
-calendar = SouthKoreaCalendar(0)
+calendar = SouthKoreaCalendar(1)
 pp = Period(asOfDate, calendar)
 vtx = Vertex.valueOf("M3")
 periods = pp.getPeriodByVertex(vtx)
@@ -72,7 +72,7 @@ for stockIndex in range(0, len(result)) :
 #######################Training SET Y#################
 #PERIOD
 asOfDate = asOfDate.plusDays(7)
-calendar = SouthKoreaCalendar(0)
+calendar = SouthKoreaCalendar(1)
 pp = Period(asOfDate, calendar)
 periods1 = pp.getPeriodByNumber(len(periods))
 
@@ -104,7 +104,7 @@ for stockIndex in range(0, len(result1)) :
 ################################Test Set X##################################
 #PERIOD
 asOfDate = Date("20150617")
-calendar = SouthKoreaCalendar(0)
+calendar = SouthKoreaCalendar(1)
 pp = Period(asOfDate, calendar)
 periods2 = pp.getPeriodByVertex(Vertex.valueOf("M1"))
 #for x in periods2 :
@@ -123,7 +123,7 @@ for stockIndex in range(0, len(result2)) :
 ################################TEST SET Y #####################################
 #PERIOD
 asOfDate = asOfDate.plusDays(7)
-calendar = SouthKoreaCalendar(0)
+calendar = SouthKoreaCalendar(1)
 pp = Period(asOfDate, calendar)
 periods3 = pp.getPeriodByNumber(len(periods2))
 
