@@ -12,8 +12,8 @@ from util.assetConditions import assetConditions
 
 #Assets
 sa = SelectAsset()
-variables = [assetConditions.MARKET]
-conditions = ["='KQ'"]
+variables = [assetConditions.MARKET, assetConditions.MARKETCAP]
+conditions = ["='KQ'", ">= '100000'"]
 #variables = [assetConditions.CODE]
 #conditions = [" in ('KS005930', 'KS008770')"]
 #variables = [assetConditions.MARKET, assetConditions.PER]

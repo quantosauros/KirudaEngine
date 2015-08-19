@@ -11,17 +11,19 @@ class assetConditions():
     MARKET = 'MARKET'
     MARKETCAP = 'MARKETCAP'
     CODE = 'CODE'
+    DESIGNATED = 'DESIGNATED'
     
     tableMap = {
-        "stock_info" : "B",
-        "stock_sisae" : "A",    
+        "STOCK_INFO" : "B",
+        "STOCK_SISAE" : "A",    
     }
     
     conditionTable = {
-        MARKET : "stock_info",
-        PER : "stock_sisae",
-        MARKETCAP : "stock_sisae",
-        CODE : "stock_sisae",
+        MARKET : "STOCK_INFO",
+        PER : "STOCK_SISAE",
+        MARKETCAP : "STOCK_SISAE",
+        CODE : "STOCK_SISAE",
+        DESIGNATED : "STOCK_SISAE"
          
     }
     

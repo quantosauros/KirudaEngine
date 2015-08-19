@@ -14,8 +14,8 @@ from util.Vertex import Vertex
 
 asOfDate = Date("20150622")
 calendar = SouthKoreaCalendar(0)
-pp = Period(asOfDate, Vertex.valueOf("D1"), calendar)
-periods = pp.getPeriod()
+pp = Period(asOfDate, calendar)
+periods = pp.getPeriodByVertex(Vertex.valueOf("D1"))
 for x in periods :
     print x
 
@@ -49,8 +49,6 @@ for x in result :
 print result[0][0]
 print result[1][0]
 print result[0][1]
-print result[0][0][0][1]
-print result[0][0][1][1]
 #print result[0][0][0]
 #print result[0][0][1]
 #print result[0][0][1][1]

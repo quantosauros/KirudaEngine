@@ -34,7 +34,7 @@ class dataEnums():
         NONE = "NONE"
         LAG = "LAG"
     
-    tableMap = {
+    dataTableMap = {
         DataEnum.ClosePrice : "STOCK_SISAE",
         DataEnum.TradingVolume : "STOCK_SISAE",
         DataEnum.TradingSum : "STOCK_SISAE",
@@ -54,3 +54,8 @@ class dataEnums():
         DataEnum.ShortNotional : "STOCK_SISAE",
     }
     
+    typeTableMap = {
+        TypeEnum.Value : 2,
+        TypeEnum.ChangeAmount : 4,
+        TypeEnum.RateOfChange : 5
+    }
