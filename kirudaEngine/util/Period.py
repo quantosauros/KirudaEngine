@@ -41,7 +41,7 @@ class Period():
             tmpLagDate = self._calendar.adjustDate(tmpLagDate.plusDays(-1),
                                                    BusinessDayConvention.PRECEDING)
             period.append(tmpLagDate)       
-        
+        period.reverse()
         return period
     
     

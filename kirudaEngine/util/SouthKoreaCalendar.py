@@ -68,7 +68,8 @@ class SouthKoreaSettlementCalendar(AbstractCalendar):
             or (d ==  4 and m == 6 and y == 2014)\
             or (d == 13 and m == 4 and y == 2016)\
             or (d == 20 and m == 12 and y == 2017)\
-            or (d == 18 and m == 2 and y == 2015)
+            or (d == 18 and m == 2 and y == 2015) \
+            or (d == 10 and m == 9 and y == 2014)
         
         if self.isWeekend(date) or flag :
             return True

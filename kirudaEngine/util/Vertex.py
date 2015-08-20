@@ -12,6 +12,7 @@ class Vertex():
     m_code = ""
     
     supportedVertices = {
+             "D0" : "000000",
              "D1" :  "000001",
              "W1" :  "000007",
              "W2" :  "000014",

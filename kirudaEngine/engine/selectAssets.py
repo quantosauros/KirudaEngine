@@ -63,10 +63,10 @@ class SelectAsset():
         '''
         test method
         '''
-        #assetNames  = ("SAMSUNG ELCT", "HOTEL SILLA", "CJE&M")
-        #assetCodes = ("KS005930", "KS008770", "KQ130960")
-        assetNames  = ("SAMSUNG ELCT", )
-        assetCodes = ("KS000080", )
+        assetNames  = ("SAMSUNG ELCT", "HOTEL SILLA", "CJE&M")
+        assetCodes = ("KS005930", "KS008770", "KQ130960")
+        #assetNames  = ("SAMSUNG ELCT", )
+        #assetCodes = ("KS000080", )
         
         
         length = len(assetCodes)
