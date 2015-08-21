@@ -1,6 +1,10 @@
 eclipse.preferences.version=1
 encoding//engine/historicalData.py=utf-8
+encoding//test/testClusteringOfStocks.py=utf-8
 encoding//test/testPCA.py=utf-8
 encoding//test/testPortfolio.py=utf-8
+encoding//test/testSVM.py=UTF-8
+encoding//test/testSVM02.py=utf-8
+encoding//test/testSVM03.py=utf-8
 encoding//util/dbConnector.py=utf-8
 encoding//util/stringController.py=utf-8

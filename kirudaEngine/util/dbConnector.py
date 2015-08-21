@@ -33,7 +33,9 @@ class dbConnector:
         #self.cursor.execute('set names utf8') 
         self.execute(query)        
         result = self.cursor.fetchall()
-        print 'Selected data.'        
+        print 'Selected data.'
+        self.cursor.close()
+        self.cursor = self.db.cursor()      
         return result    
             
     def execute(self, sqlStatement, args = None):

@@ -7,36 +7,28 @@ Created on 2015. 6. 18.
 from util.sqlMap import sqlMap
 from util.dbConnector import dbConnector
 from util.stringController import stringController as SC
+from util.QueryMaker import QueryMaker
 
 class HistoricalData():
     
     def __init__(self):
-        '''
-        Constructor
-        '''
         self.dbInstance = dbConnector(sqlMap.connectInfo)
     
-    #[asset][date]
     def getStockPrices(self, assetLists, periods):
-        
+        '''
+        [asset][date]
+        execute CALL PC_SLT_HISTSTOCKPRICE to get historical close price of stocks.    
+        '''    
         lenAssetList = len(assetLists)
         lenPeriods = len(periods)
         
         stockPrices = []
         #Make Time Statement
-        timeStatement = ""            
-        for timeIndex in range(0, lenPeriods):
-            date = periods[timeIndex]                   
-            timeStatement = timeStatement + date + SC.comma()
-        timeStatement = SC.makeQuotation(timeStatement[:-1])
+        timeStatement = QueryMaker.dateQueryMaker(periods, '1')        
         #print timeStatement
         
         #Make Asset Statement
-        assetStatement = ""        
-        for assetIndex in range(0, lenAssetList):        
-            assetCode = assetLists[assetIndex].getAssetCode()
-            assetStatement = assetStatement + assetCode + SC.comma()
-        assetStatement = SC.makeQuotation(assetStatement[:-1])
+        assetStatement = QueryMaker.stockCodeQueryMaker(assetLists, '1')
         #print assetStatement
                 
         #Make Total Statement
@@ -63,24 +55,19 @@ class HistoricalData():
         return stockPrices
             
     def getStockSisaeData(self, assetLists, periods):
+        '''
+        execute CALL PC_SLT_HISTSTOCKSISAE to get stock_sisae data of stocks
+        '''
         lenAssetList = len(assetLists)
         lenPeriods = len(periods)
         
         stockPrices = []
         #Make Time Statement
-        timeStatement = ""            
-        for timeIndex in range(0, lenPeriods):
-            date = periods[timeIndex]                   
-            timeStatement = timeStatement + date + SC.comma()
-        timeStatement = SC.makeQuotation(timeStatement[:-1])
+        timeStatement = QueryMaker.dateQueryMaker(periods, '1')
         #print timeStatement
         
-        #Make Asset Statement
-        assetStatement = ""        
-        for assetIndex in range(0, lenAssetList):        
-            assetCode = assetLists[assetIndex].getAssetCode()
-            assetStatement = assetStatement + assetCode + SC.comma()
-        assetStatement = SC.makeQuotation(assetStatement[:-1])
+        #Make Asset Statement        
+        assetStatement = QueryMaker.stockCodeQueryMaker(assetLists, '1')
         #print assetStatement
                 
         #Make Total Statement
@@ -99,8 +86,10 @@ class HistoricalData():
                 resultDate = prices[index + periodIndex][1]
                 resultPrice = prices[index + periodIndex][2:]                            
                 #print(resultCode, resultDate, resultPrice)
-                
-                priceList.append(resultPrice)
+                resultSisae = []
+                for tmpX in resultPrice:
+                    resultSisae.append(tmpX)
+                priceList.append(resultSisae)
                 
             stockPrices.append(priceList)
             

@@ -70,6 +70,7 @@ def getPCAColumnNum(dataMat, topNfest = 9999999):
     CovMat = [x / len(transformedMtx) for x in CovMat]
     eigVals, eigVects = linalg.eig(mat(CovMat))
     tteemmpp = ss.rankdata(eigVals)
+    print(tteemmpp)
     tteemmppColumnNum = []
     for index in range(0, len(eigVals)):
         if tteemmpp[index] > (len(eigVals) - topNfest) :
