@@ -9,7 +9,9 @@ from engine.historicalData import HistoricalData
 from engine.portfolio import Portfolio
 from engine.selectAssets import SelectAsset
 from util.assetConditions import assetConditions
+from util.Date import Date
 
+today = Date('20150611')
 #Assets
 sa = SelectAsset()
 variables = [assetConditions.MARKET, assetConditions.MARKETCAP]
@@ -18,7 +20,7 @@ conditions = ["='KQ'", ">= '100000'"]
 #conditions = [" in ('KS005930', 'KS008770')"]
 #variables = [assetConditions.MARKET, assetConditions.PER]
 #conditions = ["='KQ'", ">'9'"]
-assets = sa.select(variables, conditions, '20150617')
+assets = sa.select(variables, conditions, today)
 
 #Periods
 periods = ['20150611','20150612','20150615','20150616','20150617', '20150618']
