@@ -4,9 +4,9 @@ Created on 2015. 8. 19.
 @author: jayjl
 '''
 from engine.data.AbstractData import AbstractData
-from util.Period import Period
-from util.dataEnums import dataEnums
-from util.Vertex import Vertex
+from util.schedule.Period import Period
+from util.schedule.Vertex import Vertex
+from engine.type.TrainingDataType import TrainingDataType
 
 class TrainingData():
 
@@ -34,9 +34,9 @@ class TrainingData():
         self.numOfPeriod = len(periods)
         
     def genTrainingYData(self, asOfDate, lagTime, numOfPeriod):
-        datas = [dataEnums.DataEnum.ClosePrice,]
-        dataTypes = [dataEnums.TypeEnum.RateOfChange,]
-        dataConditionTypes = [dataEnums.ConditionEnum.NONE,]
+        datas = [TrainingDataType.DataEnum.ClosePrice,]
+        dataTypes = [TrainingDataType.TypeEnum.RateOfChange,]
+        dataConditionTypes = [TrainingDataType.ConditionEnum.NONE,]
         dataConditions = [-lagTime,]
         
         pp = Period(asOfDate.plusDays(lagTime), self.calendar)

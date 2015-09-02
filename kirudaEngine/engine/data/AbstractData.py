@@ -3,11 +3,12 @@ Created on 2015. 8. 12.
 
 @author: Jay
 '''
-from util.dataEnums import dataEnums
-from util.QueryMaker import QueryMaker
-from util.dbConnector import dbConnector
-from util.sqlMap import sqlMap
-from util.BusinessDayConvention import BusinessDayConvention
+
+from util.DB.QueryMaker import QueryMaker
+from util.DB.dbConnector import dbConnector
+from util.DB.sqlMap import sqlMap
+from util.schedule.BusinessDayConvention import BusinessDayConvention
+from engine.type.TrainingDataType import TrainingDataType
 
 class AbstractData():
         
@@ -42,7 +43,7 @@ class AbstractData():
                 dataType = self.dataType[dataIndex]
                 condiType = self.condiType[dataIndex]
                 condition = self.condition[dataIndex]
-                tableName = dataEnums.dataTableMap[data]
+                tableName = TrainingDataType.dataTableMap[data]
 
                 currDate = date.getDate()                                
                 #Calculate lagDate from calendar
@@ -63,7 +64,7 @@ class AbstractData():
                 
                 #[stockCode][column]
                 queryResult = self.DB.select(query)
-                columnIndex = dataEnums.typeTableMap[dataType]
+                columnIndex = TrainingDataType.typeTableMap[dataType]
                 
                 for stockIndex in range(0, len(queryResult)):
                     resultArray[stockIndex][periodIndex].append(queryResult[stockIndex][columnIndex])

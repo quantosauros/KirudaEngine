@@ -3,7 +3,7 @@ Created on 2015. 8. 12.
 
 @author: Jay
 '''
-from util.stringController import stringController as SC
+from util.DB.stringController import stringController as SC
 
 class QueryMaker():
     

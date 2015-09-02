@@ -4,10 +4,10 @@ Created on 2015. 6. 18.
 
 @author: Jay
 '''
-from util.sqlMap import sqlMap
-from util.dbConnector import dbConnector
-from util.stringController import stringController as SC
-from util.QueryMaker import QueryMaker
+from util.DB.sqlMap import sqlMap
+from util.DB.dbConnector import dbConnector
+from util.DB.stringController import stringController as SC
+from util.DB.QueryMaker import QueryMaker
 
 class HistoricalData():
     

@@ -5,15 +5,15 @@ Created on 2015. 8. 19.
 @author: Jay
 '''
 from sklearn import svm
-from util.Date import Date
-from util.SouthKoreaCalendar import SouthKoreaCalendar
-from util.Period import Period
-from util.Vertex import Vertex
 from engine.selectAssets import SelectAsset
-from util.assetConditions import assetConditions
-from util.dataEnums import dataEnums
 from engine.data.AbstractData import AbstractData
 from sklearn.preprocessing.data import StandardScaler, Normalizer
+from util.calendar.SouthKoreaCalendar import SouthKoreaCalendar
+from util.schedule.Period import Period
+from util.schedule.Vertex import Vertex
+from util.schedule.Date import Date
+from engine.type.PortfolioType import PortfolioType
+from engine.type.TrainingDataType import TrainingDataType
 
 #PERIOD
 asOfDate = Date("20150601")
@@ -26,7 +26,7 @@ periods = pp.getPeriodByVertex(vtx)
 
 #ASSETS
 sa = SelectAsset()
-variables = [assetConditions.MARKET, assetConditions.DESIGNATED, assetConditions.MARKETCAP]
+variables = [PortfolioType.MARKET, PortfolioType.DESIGNATED, PortfolioType.MARKETCAP]
 conditions = ["='KS'", "='N'", ">=1000000"]
 assets = sa.select(variables, conditions, asOfDate)
 #assets = sa.selectTest()
@@ -35,22 +35,22 @@ print len(assets)
 #########################TRAINING SET X ###################################
 #DATA
 dats = [
-    dataEnums.DataEnum.ClosePrice, 
-    dataEnums.DataEnum.TradingVolume,
-    dataEnums.DataEnum.MarketCap,
-    dataEnums.DataEnum.ForeignHoldingStock,
+    TrainingDataType.DataEnum.ClosePrice, 
+    TrainingDataType.DataEnum.TradingVolume,
+    TrainingDataType.DataEnum.MarketCap,
+    TrainingDataType.DataEnum.ForeignHoldingStock,
 ]
 dataTypes = [
-    dataEnums.TypeEnum.RateOfChange, 
-    dataEnums.TypeEnum.RateOfChange,
-    dataEnums.TypeEnum.Value,
-    dataEnums.TypeEnum.Value,
+    TrainingDataType.TypeEnum.RateOfChange, 
+    TrainingDataType.TypeEnum.RateOfChange,
+    TrainingDataType.TypeEnum.Value,
+    TrainingDataType.TypeEnum.Value,
 ]
 dataCondiTypes = [
-    dataEnums.ConditionEnum.NONE, 
-    dataEnums.ConditionEnum.LAG,
-    dataEnums.ConditionEnum.NONE,
-    dataEnums.ConditionEnum.NONE,
+    TrainingDataType.ConditionEnum.NONE, 
+    TrainingDataType.ConditionEnum.LAG,
+    TrainingDataType.ConditionEnum.NONE,
+    TrainingDataType.ConditionEnum.NONE,
 ]
 dataConditions = [
     -1, 
@@ -79,9 +79,9 @@ periods1 = pp.getPeriodByNumber(len(periods))
 #for x in periods1 :
 #    print x
 
-dats1 = [dataEnums.DataEnum.ClosePrice,]
-dataTypes1 = [dataEnums.TypeEnum.RateOfChange,]
-dataCondiTypes1 = [dataEnums.ConditionEnum.NONE,]
+dats1 = [TrainingDataType.DataEnum.ClosePrice,]
+dataTypes1 = [TrainingDataType.TypeEnum.RateOfChange,]
+dataCondiTypes1 = [TrainingDataType.ConditionEnum.NONE,]
 dataConditions1 = [-7,]
 
 dataClass1 = AbstractData(assets, dats1, dataTypes1, dataCondiTypes1, dataConditions1)
@@ -130,9 +130,9 @@ periods3 = pp.getPeriodByNumber(len(periods2))
 #for x in periods1 :
 #    print x
 
-dats1 = [dataEnums.DataEnum.ClosePrice,]
-dataTypes1 = [dataEnums.TypeEnum.RateOfChange,]
-dataCondiTypes1 = [dataEnums.ConditionEnum.NONE,]
+dats1 = [TrainingDataType.DataEnum.ClosePrice,]
+dataTypes1 = [TrainingDataType.TypeEnum.RateOfChange,]
+dataCondiTypes1 = [TrainingDataType.ConditionEnum.NONE,]
 dataConditions1 = [-7,]
 
 dataClass1 = AbstractData(assets, dats1, dataTypes1, dataCondiTypes1, dataConditions1)

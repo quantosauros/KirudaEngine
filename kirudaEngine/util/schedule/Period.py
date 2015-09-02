@@ -3,7 +3,8 @@ Created on 2015. 8. 18.
 
 @author: Jay
 '''
-from util.BusinessDayConvention import BusinessDayConvention
+from util.schedule.BusinessDayConvention import BusinessDayConvention
+
 
 class Period():
     

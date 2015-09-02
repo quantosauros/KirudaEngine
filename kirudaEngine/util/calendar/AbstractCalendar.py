@@ -4,7 +4,7 @@ Created on 2015. 8. 15.
 @author: jayjl
 '''
 from abc import ABCMeta, abstractmethod
-from util.BusinessDayConvention import BusinessDayConvention
+from util.schedule.BusinessDayConvention import BusinessDayConvention
 
 class Calendar():
     __metaclass__ = ABCMeta

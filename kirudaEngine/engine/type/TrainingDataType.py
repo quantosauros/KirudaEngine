@@ -4,7 +4,7 @@ Created on 2015. 8. 12.
 @author: Jay
 '''
 
-class dataEnums():
+class TrainingDataType():
     
     class DataEnum(enumerate):
         ClosePrice = "CurrentPrice"
