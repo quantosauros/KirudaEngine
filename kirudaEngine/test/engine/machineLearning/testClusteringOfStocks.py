@@ -7,8 +7,8 @@ Created on 2015. 7. 24.
 from sklearn import cluster
 from sklearn.neighbors import kneighbors_graph
 from sklearn.preprocessing import StandardScaler
-from engine.selectAssets import SelectAsset
-from engine.historicalData import HistoricalData
+from engine.portfolio.SelectAssets import SelectAsset
+from engine.portfolio.HistoricalData import HistoricalData
 import numpy as np
 from engine.type.PortfolioType import PortfolioType
 

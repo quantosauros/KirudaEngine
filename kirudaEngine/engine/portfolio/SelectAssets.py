@@ -3,10 +3,11 @@ Created on 2015. 6. 18.
 
 @author: Jay
 '''
-from engine.assets import Asset
+
 from util.DB.dbConnector import dbConnector
 from util.DB.sqlMap import sqlMap
 from engine.type.PortfolioType import PortfolioType
+from engine.portfolio.Assets import Asset
 
 class SelectAsset():
 

@@ -3,8 +3,7 @@ Created on 2015. 6. 18.
 
 @author: Jay
 '''
-from engine.selectAssets import SelectAsset
-
+from engine.portfolio.SelectAssets import SelectAsset
 
 aa = SelectAsset()
 

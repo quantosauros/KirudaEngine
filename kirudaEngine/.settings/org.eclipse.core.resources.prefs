@@ -1,5 +1,5 @@
 eclipse.preferences.version=1
-encoding//engine/historicalData.py=utf-8
+encoding//engine/portfolio/HistoricalData.py=utf-8
 encoding//test/engine/machineLearning/testClusteringOfStocks.py=utf-8
 encoding//test/engine/machineLearning/testPCA.py=utf-8
 encoding//test/engine/machineLearning/testSVM.py=UTF-8

@@ -3,7 +3,7 @@ Created on 2015. 8. 12.
 
 @author: Jay
 '''
-from engine.selectAssets import SelectAsset
+
 from engine.data.AbstractData import AbstractData
 from util.calendar.SouthKoreaCalendar import SouthKoreaCalendar
 from util.schedule.Period import Period
@@ -11,6 +11,7 @@ from util.schedule.Vertex import Vertex
 from util.schedule.Date import Date
 from engine.type.PortfolioType import PortfolioType
 from engine.type.TrainingDataType import TrainingDataType
+from engine.portfolio.SelectAssets import SelectAsset
 
 asOfDate = Date("20150622")
 calendar = SouthKoreaCalendar(0)

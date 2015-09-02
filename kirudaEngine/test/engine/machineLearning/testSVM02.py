@@ -5,7 +5,7 @@ Created on 2015. 8. 19.
 @author: Jay
 '''
 from sklearn import svm
-from engine.selectAssets import SelectAsset
+from engine.portfolio.SelectAssets import SelectAsset
 from engine.data.AbstractData import AbstractData
 from sklearn.preprocessing.data import StandardScaler, Normalizer
 from util.calendar.SouthKoreaCalendar import SouthKoreaCalendar
