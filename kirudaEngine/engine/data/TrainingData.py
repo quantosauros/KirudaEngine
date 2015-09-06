@@ -19,9 +19,9 @@ class TrainingData():
     def genTrainingXData(self, asOfDate, vertex):
         #PERIOD
         pp = Period(asOfDate, self.calendar)
-        periods = pp.getPeriodByVertex(vertex)
+        self._periodX = pp.getPeriodByVertex(vertex)
         #print len(periods)
-        result = self.dataClassForX.getResult(self.calendar, periods)
+        result = self.dataClassForX.getResult(self.calendar, self._periodX)
         X = []
         for stockIndex in range(0, len(result)) :
             tmpX = []
@@ -31,7 +31,7 @@ class TrainingData():
             
         self.asOfDate = asOfDate
         self.X = X
-        self.numOfPeriod = len(periods)
+        self.numOfPeriod = len(self._periodX)
         
     def genTrainingYData(self, asOfDate, lagTime, numOfPeriod):
         datas = [TrainingDataType.DataEnum.ClosePrice,]
@@ -71,6 +71,9 @@ class TrainingData():
     
     def getNumOfPeriod(self):
         return self.numOfPeriod
+    
+    def getPeriodX(self):
+        return self._periodX
     
     def genNextX(self, date):
         for stockIndex in range(0, len(self.X)) :

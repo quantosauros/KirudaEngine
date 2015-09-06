@@ -21,18 +21,18 @@ class IndicatorType():
         ExponentialWeightedMovingAverage120Day = "ExponentialWeightedMovingAverage120Day"
         
     dataTableMap = {
-        MovingAverage.SimpleMovingAverage5Day : "SMA005",
-        MovingAverage.SimpleMovingAverage20Day : "SMA020",
-        MovingAverage.SimpleMovingAverage60Day : "SMA060",
-        MovingAverage.SimpleMovingAverage120Day : "SMA120",
-        MovingAverage.WeightedMovingAverage5Day : "WMA005",
-        MovingAverage.WeightedMovingAverage20Day : "WMA020",
-        MovingAverage.WeightedMovingAverage60Day : "WMA060",
-        MovingAverage.WeightedMovingAverage120Day : "WMA120",
-        MovingAverage.ExponentialWeightedMovingAverage5Day : "EWMA005",
-        MovingAverage.ExponentialWeightedMovingAverage20Day : "EWMA020",
-        MovingAverage.ExponentialWeightedMovingAverage60Day : "EWMA060",
-        MovingAverage.ExponentialWeightedMovingAverage120Day : "EWMA120",
+        MovingAverage.SimpleMovingAverage5Day : "MASi005",
+        MovingAverage.SimpleMovingAverage20Day : "MASi020",
+        MovingAverage.SimpleMovingAverage60Day : "MASi060",
+        MovingAverage.SimpleMovingAverage120Day : "MASi120",
+        MovingAverage.WeightedMovingAverage5Day : "MAW005",
+        MovingAverage.WeightedMovingAverage20Day : "MAW020",
+        MovingAverage.WeightedMovingAverage60Day : "MAW060",
+        MovingAverage.WeightedMovingAverage120Day : "MAW120",
+        MovingAverage.ExponentialWeightedMovingAverage5Day : "MAEW005",
+        MovingAverage.ExponentialWeightedMovingAverage20Day : "MAEW020",
+        MovingAverage.ExponentialWeightedMovingAverage60Day : "MAEW060",
+        MovingAverage.ExponentialWeightedMovingAverage120Day : "MAEW120",
     }
     
     

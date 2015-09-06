@@ -8,6 +8,7 @@ from util.DB.dbConnector import dbConnector
 from util.DB.sqlMap import sqlMap
 from engine.type.PortfolioType import PortfolioType
 from engine.portfolio.Assets import Asset
+from util.schedule.Date import Date
 
 class SelectAsset():
 
@@ -64,15 +65,8 @@ class SelectAsset():
         '''
         test method
         '''
-        assetNames  = ("SAMSUNG ELCT", "HOTEL SILLA", "CJE&M")
-        assetCodes = ("KS005930", "KS008770", "KQ130960")
-        #assetNames  = ("SAMSUNG ELCT", )
-        #assetCodes = ("KS000080", )
+        variables = [PortfolioType.CODE,]
+        conditions = [" in ('KS005930', 'KS008770', 'KQ130960')",]
+        date = Date("20150617")
+        return self.select(variables, conditions, date)
         
-        
-        length = len(assetCodes)
-        
-        for index in range(0, length):
-            self.AssetList.append(Asset(assetNames[index], assetCodes[index]))
-        
-        return self.AssetList
