@@ -66,7 +66,7 @@ class SelectAsset():
         test method
         '''
         variables = [PortfolioType.CODE,]
-        conditions = [" in ('KS005930', 'KS008770', 'KQ130960')",]
+        conditions = [" in ('KQ065650','KS005930', 'KS008770', 'KQ130960')",]
         date = Date("20150617")
         return self.select(variables, conditions, date)
         

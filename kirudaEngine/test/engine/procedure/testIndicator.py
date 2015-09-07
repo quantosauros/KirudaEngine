@@ -9,7 +9,9 @@ from engine.procedure.Indicator import Indicator
 from engine.type.IndicatorType import IndicatorType
 from util.schedule import BusinessDayConvention
 from util.schedule.Vertex import Vertex
+import time
 
+startTime = time.time()
 #Simple Moving Average 5 Day
 calendar = SouthKoreaCalendar(1)
 asOfDate = Date("20150617")
@@ -37,8 +39,9 @@ for i, aa in enumerate((
     #print IndicatorType
     
     indi = Indicator(asOfDate, vertex, calendar,indicatorType)
-    indi.generate()
     indi.insertResult()
+    #print indi.getResult()
 
-
+endTime = time.time()
+print endTime - startTime
 

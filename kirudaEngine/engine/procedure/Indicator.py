@@ -45,50 +45,58 @@ class Indicator():
         
         self.DB = dbConnector(sqlMap.connectInfo);
         
-    def generate(self):
-        self._result = []
+    def getResult(self):
+        result = []
         if self._type == "MASi" :
             for index in range(0, len(self._value)):
-                self._result.append(self.sma(self._value[index], self._window))
+                result.append(self.sma(self._value[index], self._window))
         elif self._type == "MAW" :
             for index in range(0, len(self._value)):
-                self._result.append(self.wma(self._value[index], self._window))
+                result.append(self.wma(self._value[index], self._window))
         elif self._type == "MAEW" :
             for index in range(0, len(self._value)):
-                self._result.append(self.ema(self._value[index], self._window))
+                result.append(self.ema(self._value[index], self._window))
         else :
             raise ValueError("Indicator type is improper")
-
-    def getResult(self):
-        return self._result
+        
+        return result;
     
     def insertResult(self):
         codeStr = SC.makeQuotation(self._indiType)
         period = self.getPeriod()
-        totalQuery = "\
+
+        for stockIndex in range(0, len(self._value)):
+            totalQuery = "\
                 INSERT INTO\
                     INDICATOR_DATA\
                     (`date`, `code`, `underlyingCode`, `value`, `CREATED_AT`, `UPDATED_AT`)\
                 VALUES "
-        for stockIndex in range(0, len(self._result)) :
+                
+            if self._type == "MASi" :
+                result = self.sma(self._value[stockIndex], self._window)
+            elif self._type == "MAW" :                
+                result = self.wma(self._value[stockIndex], self._window)
+            elif self._type == "MAEW" :                
+                result = self.ema(self._value[stockIndex], self._window)
+            else :
+                raise ValueError("Indicator type is improper")
             
-            
-            #print assets[stockIndex].getAssetCode()
             assetStr = SC.makeQuotation(self._assets[stockIndex].getAssetCode())
+            #print assetStr
             for timeIndex in range(0, len(period)) :
                 dateStr = SC.makeQuotation(period[timeIndex].getDate())
-                valueStr = SC.makeQuotation(repr(self._result[stockIndex][timeIndex]))
+                valueStr = SC.makeQuotation(repr(result[timeIndex]))
                 query = dateStr + ", " + codeStr + ", " + assetStr + ", " + valueStr + ", now(), now()"
-                #print period[timeIndex], result[stockIndex][timeIndex]
+                #print period[timeIndex], result[timeIndex]
                 #print query
                 totalQuery = totalQuery + SC.makeParentheses(query) + ", "
-            
-             
+                             
             resultQuery = totalQuery[:-2] + " ON DUPLICATE KEY UPDATE `value` = VALUES(VALUE) , `UPDATED_AT` = NOW()"
                     
-            print resultQuery  
+            print resultQuery
+            #print assetStr
             self.DB.insert(resultQuery)
-        
+                    
     def getAssetList(self):
         return self._assets
     
