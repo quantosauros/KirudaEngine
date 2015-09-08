@@ -3,14 +3,11 @@ Created on 2015. 9. 5.
 
 @author: jayjl
 '''
-from engine.procedure.Indicator import Indicator
 from util.calendar.SouthKoreaCalendar import SouthKoreaCalendar
 from util.schedule.Date import Date
 from engine.type.IndicatorType import IndicatorType
 from util.schedule.Vertex import Vertex
-
 import time
-from util.DB.stringController import stringController as SC
 from engine.procedure.Indicator_MA import Indicator_MA
 
 

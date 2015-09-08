@@ -22,6 +22,8 @@ class IndicatorType():
     
     class Indicators(enumerate):
         AccumulationDistricutionIndex= "AccumulationDistricutionIndex"
+        Volatility5Day = "Volatility5Day"
+        Volatility20Day = "Volatility20Day"
         
     dataTableMap = {
         MovingAverage.SimpleMovingAverage5Day : "MASi005",
@@ -37,6 +39,8 @@ class IndicatorType():
         MovingAverage.ExponentialWeightedMovingAverage60Day : "MAEW060",
         MovingAverage.ExponentialWeightedMovingAverage120Day : "MAEW120",
         Indicators.AccumulationDistricutionIndex : "AD000",
+        Indicators.Volatility5Day : "VOL005",
+        Indicators.Volatility20Day : "VOL020",
     }
     
     
