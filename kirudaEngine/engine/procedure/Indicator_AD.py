@@ -60,24 +60,26 @@ class Indicator_AD(AbstractIndicator):
     def getResult(self):
         result = []
         for index in range(0, len(self._value)):
-            result.append(self.calculate(self._value[0][index], self._value[1][index], 
-                                         self._value[2][index], self._value[3][index]));
+            params = [self._value[0][index], self._value[1][index], 
+                      self._value[2][index], self._value[3][index]]
+            result.append(self.calculate(params));
             
         return result
     
     def insertResult(self):
         #TO BE IMPLEMENTED
         print "TO BE IMPLEMENTED"
-    
-    def calculate(self, closePrices, lowestPrices, highestPrices, volumes):
-        totalNum = len(closePrices)
+        
+    def calculate(self, params):
+        #params : closePrices, lowestPrices, highestPrices, volumes
+        totalNum = len(params[0])
         AD = np.zeros(totalNum)
         for index in range(0, totalNum):
-            cPrice = float(closePrices[index])
-            lPrice = float(lowestPrices[index])
-            hPrice = float(highestPrices[index])
+            cPrice = float(params[0][index])
+            lPrice = float(params[1][index])
+            hPrice = float(params[2][index])
             CLV = (cPrice - lPrice - hPrice + cPrice) / (hPrice - lPrice)            
             prevAD = 0.0 if index == 0 else AD[index - 1]
-            AD[index] = CLV * float(volumes[index]) + prevAD
+            AD[index] = CLV * float(params[3][index]) + prevAD
         
         return AD

@@ -5,11 +5,10 @@ Created on 2015. 9. 3.
 '''
 from util.schedule.Date import Date
 from util.calendar.SouthKoreaCalendar import SouthKoreaCalendar
-from engine.procedure.Indicator import Indicator
 from engine.type.IndicatorType import IndicatorType
-from util.schedule import BusinessDayConvention
 from util.schedule.Vertex import Vertex
 import time
+from engine.procedure.Indicator_MA import Indicator_MA
 
 startTime = time.time()
 #Simple Moving Average 5 Day
@@ -38,7 +37,7 @@ for i, aa in enumerate((
     #indicatorType = IndicatorType.MovingAverage.ExponentialWeightedMovingAverage5Day
     #print IndicatorType
     
-    indi = Indicator(asOfDate, vertex, calendar,indicatorType)
+    indi = Indicator_MA(calendar, asOfDate, vertex, indicatorType)
     indi.insertResult()
     #print indi.getResult()
 

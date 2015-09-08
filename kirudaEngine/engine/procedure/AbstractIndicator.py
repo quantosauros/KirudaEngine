@@ -41,7 +41,10 @@ class AbstractIndicator():
     
     @abstractmethod
     def insertResult(self): pass        
-        
+    
+    @abstractmethod
+    def calculate(self, params): pass    
+    
     def getAssetList(self):
         return self._assets
     

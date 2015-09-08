@@ -1,35 +1,29 @@
 '''
-Created on 2015. 9. 3.
+Created on 2015. 9. 8.
 
 @author: Jay
 '''
-from engine.type.IndicatorType import IndicatorType
-from util.DB.dbConnector import dbConnector
-from util.DB.sqlMap import sqlMap
-import numpy as np
+from engine.procedure.AbstractIndicator import AbstractIndicator
 from engine.type.TrainingDataType import TrainingDataType
 from engine.data.TrainingData import TrainingData
-from engine.portfolio.SelectAssets import SelectAsset
+import numpy as np
 from util.DB.stringController import stringController as SC
 
-class Indicator():
-    
-    def __init__(self, asOfDate, vertex, calendar, indicatorType):
-        self._asOfDate = asOfDate
-        self._vertex = vertex
-        
-        #ASSETS
-        sa = SelectAsset()
-        self._assets = sa.select([], [], asOfDate)
-        #self._assets = sa.selectTest()
-        
+class Indicator_MA(AbstractIndicator):
+    '''
+    http://www.ta-guru.com/Book/TechnicalAnalysis/TechnicalIndicators/MovingAverage.php5
+    '''
+
+    def setData(self):
         #DATA
         datasForX = [TrainingDataType.DataEnum.ClosePrice,]
         dataTypesForX = [TrainingDataType.TypeEnum.Value,]
         dataCondiTypesForX = [TrainingDataType.ConditionEnum.NONE,]
         dataConditionsForX = [0,]
-        tData = TrainingData(self._assets, calendar, datasForX, dataTypesForX, dataCondiTypesForX, dataConditionsForX)
-        tData.genTrainingXData(asOfDate, vertex)
+        tData = TrainingData(self._assets, self._calendar, 
+                             datasForX, dataTypesForX, dataCondiTypesForX, 
+                             dataConditionsForX)
+        tData.genTrainingXData(self._asOfDate, self._vertex)
         X = tData.getX()
         self._period = tData.getPeriodX()
         self._value = []
@@ -39,50 +33,24 @@ class Indicator():
                 newX.append(X[i][j][0])
             self._value.append(newX)
             
-        self._indiType = IndicatorType.dataTableMap[indicatorType]
-        self._type = self._indiType[:-3]
-        self._window = int(self._indiType[-3:]) 
-        
-        self.DB = dbConnector(sqlMap.connectInfo);
-        
     def getResult(self):
         result = []
-        if self._type == "MASi" :
-            for index in range(0, len(self._value)):
-                result.append(self.sma(self._value[index], self._window))
-        elif self._type == "MAW" :
-            for index in range(0, len(self._value)):
-                result.append(self.wma(self._value[index], self._window))
-        elif self._type == "MAEW" :
-            for index in range(0, len(self._value)):
-                result.append(self.ema(self._value[index], self._window))
-        else :
-            raise ValueError("Indicator type is improper")
+        for stockIndex in range(0, len(self._value)):            
+            result.append(self.calculate(stockIndex))            
+        return result    
         
-        return result;
-    
-    def insertResult(self):
+    def insertResult(self): 
         codeStr = SC.makeQuotation(self._indiType)
         period = self.getPeriod()
-
         for stockIndex in range(0, len(self._value)):
             totalQuery = "\
                 INSERT INTO\
                     INDICATOR_DATA\
                     (`date`, `code`, `underlyingCode`, `value`, `CREATED_AT`, `UPDATED_AT`)\
                 VALUES "
-                
-            if self._type == "MASi" :
-                result = self.sma(self._value[stockIndex], self._window)
-            elif self._type == "MAW" :                
-                result = self.wma(self._value[stockIndex], self._window)
-            elif self._type == "MAEW" :                
-                result = self.ema(self._value[stockIndex], self._window)
-            else :
-                raise ValueError("Indicator type is improper")
             
+            result = self.calculate(stockIndex)
             assetStr = SC.makeQuotation(self._assets[stockIndex].getAssetCode())
-            #print assetStr
             for timeIndex in range(0, len(period)) :
                 dateStr = SC.makeQuotation(period[timeIndex].getDate())
                 valueStr = SC.makeQuotation(repr(result[timeIndex]))
@@ -97,12 +65,16 @@ class Indicator():
             #print assetStr
             self.DB.insert(resultQuery)
                     
-    def getAssetList(self):
-        return self._assets
-    
-    def getPeriod(self):
-        return self._period[self._window - 1:]
-    
+    def calculate(self, params):
+        if self._type == "MASi" :
+            return self.sma(self._value[params], self._window)
+        elif self._type == "MAW" :
+            return self.wma(self._value[params], self._window)
+        elif self._type == "MAEW" :
+            return self.ema(self._value[params], self._window)
+        else :
+            raise ValueError("Indicator type is improper")
+                
     def sma(self, values, window):
         if (len(values) < window) :
             raise ValueError("data is too short")
@@ -128,7 +100,6 @@ class Indicator():
             wma[j] = wma[j-1] - tmp / sum
         return wma
   
-    
     def ema(self, values, window):
         """
         Calculates Exponential Moving Average
@@ -144,33 +115,5 @@ class Indicator():
         for value in values[-window - 1:]:
             ema[index] = (c * value) + ((1 - c) * ema[index - 1])
             index = index + 1
-        return ema
-    
-    #===========================================================================
-    # def __init__(self, calendar, indicatorType):
-    #     
-    #     self._calendar = calendar
-    #     self._indicatorType = indicatorType
-    #     self.DB = dbConnector(sqlMap.connectInfo);
-    #     
-    #         
-    # def generate(self, date):
-    #     tmp = IndicatorType.dataTableMap[self._indicatorType]
-    #     type = tmp[:-3]
-    #     numOfTermDate = int(tmp[-3:]) 
-    #     #print type
-    #     #print numOfTermDate
-    #     
-    #     prevDate = self._calendar.getBusinessDayFromDate(date, -1)
-    #     dropDate = self._calendar.getBusinessDayFromDate(date, -numOfTermDate)        
-    #     #print date, prevDate, dropDate
-    #     
-    #     query = "CALL PC_INST_INDICATOR_MA('" + str(date) + "', '" + str(prevDate) +\
-    #             "', '" + str(dropDate) + "', '" + repr(numOfTermDate) + "', '" + type + "');"
-    #     print query
-    #     
-    #     self.DB.insert(query)
-    #     
-    #             
-    #===========================================================================
-    
+        return ema          
+            

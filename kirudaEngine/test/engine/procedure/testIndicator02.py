@@ -11,6 +11,7 @@ from util.schedule.Vertex import Vertex
 
 import time
 from util.DB.stringController import stringController as SC
+from engine.procedure.Indicator_MA import Indicator_MA
 
 
 startTime = time.time()
@@ -23,19 +24,15 @@ vertex = Vertex.valueOf("W2")
 indicatorType = IndicatorType.MovingAverage.WeightedMovingAverage5Day
 #indicatorType = IndicatorType.MovingAverage.ExponentialWeightedMovingAverage5Day
 
-indi = Indicator(asOfDate, vertex, calendar,indicatorType)
-indi.generate()
-indi.insertResult()
+indi = Indicator_MA(calendar, asOfDate, vertex, indicatorType)
+
 result = indi.getResult()
-period = indi.getPeriod()
+print result
 
 #===============================================================================
 # for y in result :
 #     print y
 #===============================================================================
-
-for x in period :
-    print x
 
 endTime = time.time()
 print endTime - startTime
