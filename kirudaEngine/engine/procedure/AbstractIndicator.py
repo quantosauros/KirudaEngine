@@ -71,7 +71,14 @@ class AbstractIndicator(Indicator):
     def getPeriod(self):
         return self._period[self._window - 1:]
        
+    
     def sma(self, values, window):
+        '''
+        Calculate Simple Moving Average
+        parameter 'values' should contain values by time order
+            which you want to calcuate.
+        parameter 'window' means the length of average day
+        '''
         if (len(values) < window) :
             raise ValueError("data is too short")
         weights = np.repeat(1.0, window)/window
@@ -80,6 +87,12 @@ class AbstractIndicator(Indicator):
         return sma
     
     def wma(self, values, window):
+        '''
+        Calculate Weighted Moving Average
+        parameter 'values' should contain values by time order
+            which you want to calcuate.
+        parameter 'window' means the length of average day
+        '''
         if len(values) < window :
             raise ValueError("data is too short")
         sum = window * (window + 1.0) / 2.0
@@ -96,11 +109,15 @@ class AbstractIndicator(Indicator):
             wma[j] = wma[j-1] - tmp / sum
         return wma
   
-    def ema(self, values, window):
-        """
+    def ema(self, values, window):        
+        '''
         Calculates Exponential Moving Average
         http://fxtrade.oanda.com/learn/forex-indicators/exponential-moving-average
-        """
+        
+        parameter 'values' should contain values by time order
+            which you want to calcuate.
+        parameter 'window' means the length of average day
+        '''        
         if len(values) < 2 + window:
             raise ValueError("data is too short")
         totalNum = len(values) - window + 1
