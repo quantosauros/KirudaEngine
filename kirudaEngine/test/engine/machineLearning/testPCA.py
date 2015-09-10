@@ -4,29 +4,30 @@ Created on 2015. 7. 1.
 
 @author: user
 '''
-from engine.assets import Asset
-from engine.historicalData import HistoricalData
-from engine.selectAssets import SelectAsset
-from util.assetConditions import assetConditions
-from engine.portfolio import Portfolio
+from engine.portfolio.HistoricalData import HistoricalData
+from engine.portfolio.SelectAssets import SelectAsset
+from engine.type.PortfolioType import PortfolioType
+from engine.portfolio.Portfolio import Portfolio
 from engine.machineLearning.principalComponentAnalysis import pca, getPCAColumnNum
 from numpy import zeros
+from util.schedule.Date import Date
 
+asOfDate = Date("20150301")
 #Assets
 sa = SelectAsset()
 assets = sa.selectTest()
 #print(assets)
-variables = [assetConditions.MARKET]
+variables = [PortfolioType.MARKET]
 conditions = ["='KS'"]
 #variables = [assetConditions.MARKET, assetConditions.MARKETCAP]
 #conditions = ["='KS'", ">'5000'"]
-assets = sa.select(variables, conditions)
+assets = sa.select(variables, conditions, asOfDate)
 #for x in assets:
 #    print(x)
 periods = ['20150610', '20150611', '20150612', '20150615', '20150616', '20150617', '20150618']
 #periods = ['20150617', '20150618']
 hd = HistoricalData()
-sisae = hd.getStockSisaeData1(assets, periods)
+sisae = hd.getStockSisaeData(assets, periods)
 
 #print(sisae)
 

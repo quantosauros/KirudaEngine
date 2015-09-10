@@ -4,7 +4,7 @@ Created on 2015. 8. 15.
 @author: jayjl
 '''
 from abc import ABCMeta, abstractmethod
-from util.BusinessDayConvention import BusinessDayConvention
+from util.schedule.BusinessDayConvention import BusinessDayConvention
 
 class Calendar():
     __metaclass__ = ABCMeta
@@ -28,6 +28,9 @@ class Calendar():
     
     @abstractmethod
     def adjustDate(self, date, convention): pass
+    
+    @abstractmethod
+    def getBusinessDayFromDate(self, date, number): pass
     
 class AbstractCalendar(Calendar):
     
@@ -86,6 +89,14 @@ class AbstractCalendar(Calendar):
                 return d3
         
         return d1
+    
+    def getBusinessDayFromDate(self, date, number):
+        tmpLagDate = date
+        increment = -1 if number < 0 else 1
+        for index in range(0, abs(number)):                    
+            tmpLagDate = self.adjustDate(tmpLagDate.plusDays(increment),
+                                         BusinessDayConvention.PRECEDING)
+        return tmpLagDate
         
 class DelegateCalendar(AbstractCalendar):
     
@@ -109,4 +120,7 @@ class DelegateCalendar(AbstractCalendar):
     
     def adjustDate(self, date, convention):
         return self.delegate.adjustDate(date, convention)
+    
+    def getBusinessDayFromDate(self, date, number):
+        return self.delegate.getBusinessDayFromDate(date, number)
     

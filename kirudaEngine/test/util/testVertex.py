@@ -3,8 +3,7 @@ Created on 2015. 8. 18.
 
 @author: Jay
 '''
-from util.Vertex import Vertex
-
+from util.schedule.Vertex import Vertex
 
 vv = Vertex.valueOf("D1")
 print vv

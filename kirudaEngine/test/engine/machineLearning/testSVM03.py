@@ -5,21 +5,19 @@ Created on 2015. 8. 19.
 @author: Jay
 '''
 from sklearn import svm
-from util.Date import Date
-from util.SouthKoreaCalendar import SouthKoreaCalendar
-from util.Period import Period
-from util.Vertex import Vertex
-from engine.selectAssets import SelectAsset
-from util.assetConditions import assetConditions
-from util.dataEnums import dataEnums
-from engine.data.AbstractData import AbstractData
+from engine.portfolio.SelectAssets import SelectAsset
 from sklearn.preprocessing.data import StandardScaler, Normalizer
-from engine.TrainingData import TrainingData
+from engine.data.TrainingData import TrainingData
+from util.calendar.SouthKoreaCalendar import SouthKoreaCalendar
+from util.schedule.Vertex import Vertex
+from util.schedule.Date import Date
+from engine.type.PortfolioType import PortfolioType
+from engine.type.TrainingDataType import TrainingDataType
 
 calendar = SouthKoreaCalendar(1)
 #ASSETS
 sa = SelectAsset()
-variables = [assetConditions.MARKET, assetConditions.DESIGNATED, assetConditions.MARKETCAP]
+variables = [PortfolioType.MARKET, PortfolioType.DESIGNATED, PortfolioType.MARKETCAP]
 conditions = ["='KS'", "='N'", ">=1000000"]
 assets = sa.select(variables, conditions, Date("20150601"))
 #assets = sa.selectTest()
@@ -27,22 +25,22 @@ print len(assets)
 
 #DATA
 datasForX = [
-    dataEnums.DataEnum.ClosePrice, 
-    dataEnums.DataEnum.TradingVolume,
-    dataEnums.DataEnum.MarketCap,
-    dataEnums.DataEnum.ForeignHoldingStock,
+    TrainingDataType.DataEnum.ClosePrice, 
+    TrainingDataType.DataEnum.TradingVolume,
+    TrainingDataType.DataEnum.MarketCap,
+    TrainingDataType.DataEnum.ForeignHoldingStock,
 ]
 dataTypesForX = [
-    dataEnums.TypeEnum.RateOfChange, 
-    dataEnums.TypeEnum.RateOfChange,
-    dataEnums.TypeEnum.Value,
-    dataEnums.TypeEnum.Value,
+    TrainingDataType.TypeEnum.RateOfChange, 
+    TrainingDataType.TypeEnum.RateOfChange,
+    TrainingDataType.TypeEnum.Value,
+    TrainingDataType.TypeEnum.Value,
 ]
 dataCondiTypesForX = [
-    dataEnums.ConditionEnum.NONE, 
-    dataEnums.ConditionEnum.LAG,
-    dataEnums.ConditionEnum.NONE,
-    dataEnums.ConditionEnum.NONE,
+    TrainingDataType.ConditionEnum.NONE, 
+    TrainingDataType.ConditionEnum.LAG,
+    TrainingDataType.ConditionEnum.NONE,
+    TrainingDataType.ConditionEnum.NONE,
 ]
 dataConditionsForX = [
     -1, 

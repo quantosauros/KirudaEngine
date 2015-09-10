@@ -4,9 +4,9 @@ Created on 2015. 8. 19.
 @author: jayjl
 '''
 from engine.data.AbstractData import AbstractData
-from util.Period import Period
-from util.dataEnums import dataEnums
-from util.Vertex import Vertex
+from util.schedule.Period import Period
+from util.schedule.Vertex import Vertex
+from engine.type.TrainingDataType import TrainingDataType
 
 class TrainingData():
 
@@ -19,9 +19,9 @@ class TrainingData():
     def genTrainingXData(self, asOfDate, vertex):
         #PERIOD
         pp = Period(asOfDate, self.calendar)
-        periods = pp.getPeriodByVertex(vertex)
+        self._periodX = pp.getPeriodByVertex(vertex)
         #print len(periods)
-        result = self.dataClassForX.getResult(self.calendar, periods)
+        result = self.dataClassForX.getResult(self.calendar, self._periodX)
         X = []
         for stockIndex in range(0, len(result)) :
             tmpX = []
@@ -31,12 +31,12 @@ class TrainingData():
             
         self.asOfDate = asOfDate
         self.X = X
-        self.numOfPeriod = len(periods)
+        self.numOfPeriod = len(self._periodX)
         
     def genTrainingYData(self, asOfDate, lagTime, numOfPeriod):
-        datas = [dataEnums.DataEnum.ClosePrice,]
-        dataTypes = [dataEnums.TypeEnum.RateOfChange,]
-        dataConditionTypes = [dataEnums.ConditionEnum.NONE,]
+        datas = [TrainingDataType.DataEnum.ClosePrice,]
+        dataTypes = [TrainingDataType.TypeEnum.RateOfChange,]
+        dataConditionTypes = [TrainingDataType.ConditionEnum.NONE,]
         dataConditions = [-lagTime,]
         
         pp = Period(asOfDate.plusDays(lagTime), self.calendar)
@@ -71,6 +71,9 @@ class TrainingData():
     
     def getNumOfPeriod(self):
         return self.numOfPeriod
+    
+    def getPeriodX(self):
+        return self._periodX
     
     def genNextX(self, date):
         for stockIndex in range(0, len(self.X)) :

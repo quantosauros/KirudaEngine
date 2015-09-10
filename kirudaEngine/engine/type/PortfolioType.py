@@ -4,7 +4,7 @@ Created on 2015. 6. 18.
 @author: Jay
 '''
 
-class assetConditions():
+class PortfolioType():
     
     PER = 'PER'
     #KS, KQ

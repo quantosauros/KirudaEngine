@@ -3,10 +3,12 @@ Created on 2015. 6. 18.
 
 @author: Jay
 '''
-from engine.assets import Asset
-from util.dbConnector import dbConnector
-from util.sqlMap import sqlMap
-from util.assetConditions import assetConditions
+
+from util.DB.dbConnector import dbConnector
+from util.DB.sqlMap import sqlMap
+from engine.type.PortfolioType import PortfolioType
+from engine.portfolio.Assets import Asset
+from util.schedule.Date import Date
 
 class SelectAsset():
 
@@ -25,8 +27,8 @@ class SelectAsset():
             FROM "
             
         fromStatement = ""
-        for x in assetConditions.tableMap:
-            tmp = x + " " + assetConditions.tableMap[x] + ", "
+        for x in PortfolioType.tableMap:
+            tmp = x + " " + PortfolioType.tableMap[x] + ", "
             fromStatement = fromStatement + tmp
             #print(tmp)
         
@@ -38,8 +40,8 @@ class SelectAsset():
             
         totalStatement = selectStatement + fromStatement[:-2] + whereStatement
         for index in range(0, len(variables)):
-            tableName = assetConditions.conditionTable[variables[index]]
-            condition = " AND " + assetConditions.tableMap[tableName] + "." +\
+            tableName = PortfolioType.conditionTable[variables[index]]
+            condition = " AND " + PortfolioType.tableMap[tableName] + "." +\
                 variables[index] + conditions[index] 
                         
             #print(condition)
@@ -63,15 +65,8 @@ class SelectAsset():
         '''
         test method
         '''
-        assetNames  = ("SAMSUNG ELCT", "HOTEL SILLA", "CJE&M")
-        assetCodes = ("KS005930", "KS008770", "KQ130960")
-        #assetNames  = ("SAMSUNG ELCT", )
-        #assetCodes = ("KS000080", )
+        variables = [PortfolioType.CODE,]
+        conditions = [" in ('KQ065650','KS005930', 'KS008770', 'KQ130960')",]
+        date = Date("20150617")
+        return self.select(variables, conditions, date)
         
-        
-        length = len(assetCodes)
-        
-        for index in range(0, length):
-            self.AssetList.append(Asset(assetNames[index], assetCodes[index]))
-        
-        return self.AssetList

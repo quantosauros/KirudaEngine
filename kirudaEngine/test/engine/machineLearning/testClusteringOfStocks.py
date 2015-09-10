@@ -7,16 +7,18 @@ Created on 2015. 7. 24.
 from sklearn import cluster
 from sklearn.neighbors import kneighbors_graph
 from sklearn.preprocessing import StandardScaler
-from engine.selectAssets import SelectAsset
-from util.assetConditions import assetConditions
-from engine.historicalData import HistoricalData
+from engine.portfolio.SelectAssets import SelectAsset
+from engine.portfolio.HistoricalData import HistoricalData
 import numpy as np
+from engine.type.PortfolioType import PortfolioType
+from util.schedule.Date import Date
 
+asOfDate = Date("20150301")
 #Assets
 sa = SelectAsset()
-variables = [assetConditions.MARKET]
+variables = [PortfolioType.MARKET]
 conditions = ["='KS'"]
-assets = sa.select(variables, conditions)
+assets = sa.select(variables, conditions, asOfDate)
 #assets = sa.selectTest()
 assetCodeSTR = ""
 assetNameSTR = ""
