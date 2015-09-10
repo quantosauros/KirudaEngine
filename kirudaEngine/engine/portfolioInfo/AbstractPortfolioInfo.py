@@ -3,7 +3,7 @@ Created on 2015. 8. 23.
 
 @author: thCho
 '''
-from util.sqlMap import sqlMap
+from util.DB.sqlMap import sqlMap
 from lib2to3.fixer_util import String
 import AbstractStrategy as AS
 import numpy as np
@@ -25,7 +25,7 @@ class AbstractPortfolioInfo():
         self.balanceValue = startMoney
         self.startDate = period[0]
         self.latestDate = self.startDate
-        self.endDate = period[1]
+        self.endDate = period[1] 
         tmpTimeStatement = "SELECT DISTINCT(date) FROM STOCK_SISAE WHERE" +  period[0] + " <= date  AND date <= " + period[1] 
         self.timePeriod = self.dbInstance.select(tmpTimeStatement)
         self.timeNum = len(self.timePeriod)
@@ -49,8 +49,12 @@ class AbstractPortfolioInfo():
             
         self.historicalStockPrice = []
         for i in range(0, len(self.assetArray)):
-            tmpPriceStatement = sqlMap.SELECTTRAININGDATA %(self.assetArray[i],period[0],period[1])
-            priceData = self.dbInstance.select(tmpPriceStatement)
+#             tmpPriceStatement = sqlMap.SELECTTRAININGDATA %(self.assetArray[i],period[0],period[1])
+#             priceData = self.dbInstance.select(tmpPriceStatement)
+            priceData = []
+            for j in range(0, len(self.timeArray)):
+                tmpPriceStatement = sqlMap.SELECTTRAININGDATA %(self.assetArray[i],self.timeArray[j])
+                priceData.append(self.dbInstance.select(tmpPriceStatement))
             self.historicalStockPrice.append(priceData)
 
 # same date strategy sorting machine 

@@ -196,4 +196,12 @@ class sqlMap:
         
     SELECTHISTSTOCKSISAE = "\
         CALL PC_SLT_HISTSTOCKSISAE %s"
-        
+    
+    SELECTTRAININGDATA = "\
+        SELECT \
+            IFNULL(CURRENTPRICE, 0) \
+        FROM \
+            STOCK_SISAE \
+        WHERE \
+            CODE = '%s' \
+            AND DT = '%s'"  

@@ -5,7 +5,7 @@ Created on 2015. 8. 23.
 '''
 import AbstractPortfolioInfo as PI
 import AbstractStrategy as AS
-from util.sqlMap import sqlMap
+from util.DB.sqlMap import sqlMap
 from lib2to3.fixer_util import String
 import numpy as np
 from _mysql import NULL
