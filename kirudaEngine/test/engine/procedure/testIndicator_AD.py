@@ -17,7 +17,7 @@ asOfDate = Date("20150617")
 vertex = Vertex.valueOf("W1")
 
 #indicatorType = IndicatorType.MovingAverage.SimpleMovingAverage5Day
-indicatorType = IndicatorType.Indicators.AccumulationDistricutionIndex
+indicatorType = IndicatorType.IndicatorType_AD.AccumulationDistricutionIndex
 #indicatorType = IndicatorType.MovingAverage.ExponentialWeightedMovingAverage5Day
 
 indi = Indicator_AD(calendar, asOfDate, vertex, indicatorType)

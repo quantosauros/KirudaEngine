@@ -19,22 +19,21 @@ vertex = Vertex.valueOf("M6")
 
 #print date
 for i, aa in enumerate((
-                     IndicatorType.MovingAverage.SimpleMovingAverage5Day,
-                     #IndicatorType.MovingAverage.SimpleMovingAverage20Day,                         
-                     #IndicatorType.MovingAverage.SimpleMovingAverage60Day,
-                     #IndicatorType.MovingAverage.SimpleMovingAverage120Day,
-                     #IndicatorType.MovingAverage.WeightedMovingAverage5Day,
-                     #IndicatorType.MovingAverage.WeightedMovingAverage20Day,
-                     #IndicatorType.MovingAverage.WeightedMovingAverage60Day,
-                     #IndicatorType.MovingAverage.WeightedMovingAverage120Day,
-                     #IndicatorType.MovingAverage.ExponentialWeightedMovingAverage5Day,
-                     #IndicatorType.MovingAverage.ExponentialWeightedMovingAverage20Day,
-                     #IndicatorType.MovingAverage.ExponentialWeightedMovingAverage60Day,
-                     #IndicatorType.MovingAverage.ExponentialWeightedMovingAverage120Day
+                     IndicatorType.IndicatorType_MA.SimpleMovingAverage5Day,
+                     #IndicatorType.IndicatorType_MA.SimpleMovingAverage20Day,                         
+                     #IndicatorType.IndicatorType_MA.SimpleMovingAverage60Day,
+                     #IndicatorType.IndicatorType_MA.SimpleMovingAverage120Day,
+                     #IndicatorType.IndicatorType_MA.WeightedMovingAverage5Day,
+                     #IndicatorType.IndicatorType_MA.WeightedMovingAverage20Day,
+                     #IndicatorType.IndicatorType_MA.WeightedMovingAverage60Day,
+                     #IndicatorType.IndicatorType_MA.WeightedMovingAverage120Day,
+                     #IndicatorType.IndicatorType_MA.ExponentialWeightedMovingAverage5Day,
+                     #IndicatorType.IndicatorType_MA.ExponentialWeightedMovingAverage20Day,
+                     #IndicatorType.IndicatorType_MA.ExponentialWeightedMovingAverage60Day,
+                     #IndicatorType.IndicatorType_MA.ExponentialWeightedMovingAverage120Day
                      )) :
     
     indicatorType = aa
-    #indicatorType = IndicatorType.MovingAverage.ExponentialWeightedMovingAverage5Day
     #print IndicatorType
     
     indi = Indicator_MA(calendar, asOfDate, vertex, indicatorType)

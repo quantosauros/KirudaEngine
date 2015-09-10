@@ -10,9 +10,40 @@ from util.DB.sqlMap import sqlMap
 from engine.type.IndicatorType import IndicatorType
 import numpy as np
 
-class AbstractIndicator():
+class Indicator():
     __metaclass__ = ABCMeta
     
+    def __init__(self):
+        '''
+        Constructor
+        '''
+    
+    @abstractmethod
+    def setAsset(self): pass
+    
+    @abstractmethod
+    def setIndicatorType(self): pass
+    
+    @abstractmethod
+    def setData(self): pass
+    
+    @abstractmethod
+    def getResult(self): pass
+    
+    @abstractmethod
+    def insertResult(self): pass        
+    
+    @abstractmethod
+    def calculate(self, params): pass    
+    
+    @abstractmethod
+    def getAssetList(self): pass
+    
+    @abstractmethod
+    def getPeriod(self): pass    
+
+class AbstractIndicator(Indicator):
+        
     def __init__(self, calendar, asOfDate, vertex, indicatorType):
         self._calendar = calendar
         self._asOfDate = asOfDate
@@ -26,25 +57,13 @@ class AbstractIndicator():
     def setAsset(self):
         #ASSETS
         sa = SelectAsset()
-        #self._assets = sa.select([], [], self._asOfDate)
-        self._assets = sa.selectTest()
+        self._assets = sa.select([], [], self._asOfDate)
+        #self._assets = sa.selectTest()
         
     def setIndicatorType(self):
         self._indiType = IndicatorType.dataTableMap[self._indicatorType]
         self._type = self._indiType[:-3]
         self._window = int(self._indiType[-3:]) 
-    
-    @abstractmethod
-    def setData(self): pass
-    
-    @abstractmethod
-    def getResult(self): pass
-    
-    @abstractmethod
-    def insertResult(self): pass        
-    
-    @abstractmethod
-    def calculate(self, params): pass    
     
     def getAssetList(self):
         return self._assets
@@ -93,4 +112,39 @@ class AbstractIndicator():
             ema[index] = (c * value) + ((1 - c) * ema[index - 1])
             index = index + 1
         return ema          
-            
+
+class DelegateIndicator(AbstractIndicator):
+    
+    def __init__(self):
+        self.delegate = AbstractIndicator()
+        
+    def setDeletage(self, indicator):
+        self.delegate = indicator
+    
+    def setAsset(self):
+        self.delegate.setAsset() 
+    
+    def setIndicatorType(self):
+        self.delegate.setIndicatorType()
+
+    def setData(self):
+        self.delegate.setData()
+    
+    def getResult(self):
+        return self.delegate.getResult()
+    
+    def insertResult(self):
+        self.delegate.insertResult()        
+  
+    def calculate(self, params):
+        self.delegate.calculate(params)    
+  
+    def getAssetList(self):
+        return self.delegate.getAssetList()
+
+    def getPeriod(self):
+        return self.delegate.getPeriod()
+   
+        
+        
+    

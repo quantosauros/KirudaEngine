@@ -17,9 +17,9 @@ calendar = SouthKoreaCalendar(1)
 asOfDate = Date("20150617")
 vertex = Vertex.valueOf("W2")
 
-#indicatorType = IndicatorType.MovingAverage.SimpleMovingAverage5Day
-indicatorType = IndicatorType.MovingAverage.WeightedMovingAverage5Day
-#indicatorType = IndicatorType.MovingAverage.ExponentialWeightedMovingAverage5Day
+#indicatorType = IndicatorType.IndicatorType_MA.SimpleMovingAverage5Day
+indicatorType = IndicatorType.IndicatorType_MA.WeightedMovingAverage5Day
+#indicatorType = IndicatorType.IndicatorType_MA.ExponentialWeightedMovingAverage5Day
 
 indi = Indicator_MA(calendar, asOfDate, vertex, indicatorType)
 

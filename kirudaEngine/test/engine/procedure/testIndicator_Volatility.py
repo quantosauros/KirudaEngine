@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 '''
 Created on 2015. 9. 8.
 
@@ -14,10 +15,10 @@ startTime = time.time()
 calendar = SouthKoreaCalendar(1)
 
 asOfDate = Date("20150617")
-vertex = Vertex.valueOf("M3")
+vertex = Vertex.valueOf("M1")
 
 #indicatorType = IndicatorType.MovingAverage.SimpleMovingAverage5Day
-indicatorType = IndicatorType.Indicators.Volatility5Day
+indicatorType = IndicatorType.IndicatorType_Volatility.Volatility5Day
 #indicatorType = IndicatorType.MovingAverage.ExponentialWeightedMovingAverage5Day
 
 indi = Indicator_Volatility(calendar, asOfDate, vertex, indicatorType)
