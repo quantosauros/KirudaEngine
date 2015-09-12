@@ -4,6 +4,7 @@ Created on 2015. 8. 23.
 @author: thCho
 '''
 from util.DB.sqlMap import sqlMap
+from util.DB import dbConnector
 from lib2to3.fixer_util import String
 import AbstractStrategy as AS
 import numpy as np
@@ -26,17 +27,19 @@ class AbstractPortfolioInfo():
         self.startDate = period[0]
         self.latestDate = self.startDate
         self.endDate = period[1] 
-        tmpTimeStatement = "SELECT DISTINCT(date) FROM STOCK_SISAE WHERE" +  period[0] + " <= date  AND date <= " + period[1] 
-        self.timePeriod = self.dbInstance.select(tmpTimeStatement)
+        self._DB = dbConnector.dbConnector(sqlMap.connectInfo);
+        tmpTimeStatement = "SELECT DISTINCT(date) FROM STOCK_SISAE WHERE " +  period[0] + " <= date  AND date <= " + period[1]  
+        self.timePeriod = self._DB.select(tmpTimeStatement)
+        
         self.timeNum = len(self.timePeriod)
         for i in range(0, len(self.assetArray)):
             self.dailyIndividualProfit.append([0])
             self.weight.append([0])
         
-        self.timeArray = {self.timePeriod[0]: 0}
+        self.timeArray = {self.timePeriod[0][0]: 0}
         for i in range(1, self.timeNum):
             self.addBalance.append(False)
-            self.timeArray[self.timePeriod[i]] = i
+            self.timeArray[self.timePeriod[i][0]] = i
             self.dailyProfit.append(0)
             self.pfoValue.append(0)
             for j in range(0, len(self.assetArray)):
@@ -53,8 +56,8 @@ class AbstractPortfolioInfo():
 #             priceData = self.dbInstance.select(tmpPriceStatement)
             priceData = []
             for j in range(0, len(self.timeArray)):
-                tmpPriceStatement = sqlMap.SELECTTRAININGDATA %(self.assetArray[i],self.timeArray[j])
-                priceData.append(self.dbInstance.select(tmpPriceStatement))
+                tmpPriceStatement = sqlMap.SELECTTRAININGDATA %(self.assetArray[i],self.timePeriod[j][0])
+                priceData.append(self._DB.select(tmpPriceStatement)[0][0])
             self.historicalStockPrice.append(priceData)
 
 # same date strategy sorting machine 
@@ -63,14 +66,14 @@ class AbstractPortfolioInfo():
         
         assetIndexToArray = []
         timeIndexToArray = []
-        weight =[[]]
+        weight =[]
         asset = 0
         time = 0
         for i in range(0, len(self.assetArray)):
             assetIndexToArray.append(0)
             timeIndexToArray.append(0)
             weight.append([0])
-            for i in range(0, self.timeNum):
+            for j in range(0, self.timeNum):
                 weight[i].append(0)
             
         for i in range(0, strategyNum):
@@ -78,7 +81,7 @@ class AbstractPortfolioInfo():
             time = self.timeArray[strategies[i].returnDate()]
             weight[asset][time] = strategies[i].returnWeight()
         
-        return [weight]
+        return weight
     
     
     
@@ -101,8 +104,8 @@ class AbstractPortfolioInfo():
         
         
         for i in range(0, len(self.assetArray)):
-            assetPrice = self.historicalStockPrice[i][dateIndex]
-            prevValue += assetPrice * weight[i]
+            assetPrice = self.historicalStockPrice[i][dateIndex - 1]
+            prevValue += assetPrice * self.weight[i][dateIndex - 1]
             
         
         if netOrInstant == False:
@@ -131,8 +134,10 @@ class AbstractPortfolioInfo():
                 value += self.weight[i][dateIndex] * assetPrice
         
         self.balanceValue -= cost
+        print("balance: " , self.balanceValue)
         self.latestDate = date
         self.pfoValue[dateIndex] = self.balanceValue + value
+        print("pfo value: " , self.pfoValue[dateIndex])
         self.dailyProfit[dateIndex] = value - prevValue
         
         

@@ -204,4 +204,4 @@ class sqlMap:
             STOCK_SISAE \
         WHERE \
             CODE = '%s' \
-            AND DT = '%s'"  
+            AND date = '%s'"  

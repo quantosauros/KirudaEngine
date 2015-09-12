@@ -18,12 +18,12 @@ class PortfolioInfo():
         self.asset = assets
         self.balance = startMoney
         self.period = period
-        self.Pfo = PI(assets, startMoney, period)
+        self.Pfo = PI.AbstractPortfolioInfo(assets, startMoney, period)
     
     
     def getInfobyStrategy(self, strategies, netOrInstant):
         for i in range(0, self.Pfo.timeNum):
-            date = self.Pfo.timePeriod[i]
+            date = self.Pfo.timePeriod[i][0]
             tmpWeight = self.Pfo.sortPortfolioWeight(strategies)
             weight = []
             for j in range(0, len(self.Pfo.assetArray)):
@@ -37,6 +37,9 @@ class PortfolioInfo():
             for j in range(0, len(self.Pfo.assetArray)):
                 tmpWeight.append(weight[j][i])
             self.Pfo.addPortfolioByGP(date, tmpWeight, netOrInstant)
+    
+    def getMTM(self, date):
+        return self.Pfo.MarkToMark(date)
     
     
         

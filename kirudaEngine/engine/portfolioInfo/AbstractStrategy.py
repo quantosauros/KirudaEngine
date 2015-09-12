@@ -7,7 +7,7 @@ Created on 2015. 9. 10.
 
 class AbstractStrategy():
     
-    def __init__(self, assetCode, date, weight):
+    def __init__(self, date, assetCode, weight):
         self.assetCode = assetCode
         self.date = date
         self.weight = weight
